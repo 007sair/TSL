@@ -13,14 +13,13 @@ function ScrollLoad(options) {
 	this.opt = $.extend({}, {
 		autoLoad: false, 			//第一次自动加载，不足一屏继续自动加载直到数据占满一屏，默认不加载
 		render: function() {}, 		//上滑触发
-		afterRender: function() {} 	//render后回调函数 一般用于ajax异步中
+		afterRender: function() {}, 	//render后回调函数 一般用于ajax异步中
+		scroll: function() {}
 	}, options);
 
 	this.loader = new Loading(this.opt.loading);  //loading对象，包含了对loading的所有属性与操作
 
 	this.WINDOW_HEIGHT = $(window).height();
-	this.render = this.opt.render;
-	this.afterRender = function() {}; 	//异步加载完成的回调
 	
 	this.timer = null; //load定时器
 	this.isStopLoad = false; //是否禁止滚动事件
@@ -53,23 +52,22 @@ ScrollLoad.prototype = {
 	 */
 	load: function(callback) { //参数：回调函数，此函数需放入ajax.success内执行
 		var me = this;
-		function loop() {
-			if (me.isStopLoad) return false;
-			me.loader.show();
-			clearTimeout(me.timer);
-			me.timer = setTimeout(function() {
-				me.render(function() {
-					if (!me.isStopLoop && !me.isOutScreen()) { //如果页面没有超过一屏，继续加载
-						setTimeout(loop, 200);
-					} else {
-						console.log('load complate!');
-						callback && callback();
-						me.afterRender();
-					}
-				})
-			}, 500);
-		}
-		loop();
+		if (me.isStopLoad) return false;
+		me.getContainer(); //非必须，待定
+		me.loader.show();
+		clearTimeout(me.timer);
+		me.timer = setTimeout(function() {
+			me.opts.render.call(me, function() {
+				if (!me.isStopLoop && !me.isOutScreen()) { //如果页面没有超过一屏，继续加载
+					setTimeout(function() {
+						me.load();
+					}, 200);
+				} else {
+					callback && callback();
+					me.opts.afterRender.call(me);
+				}
+			})
+		}, 500);
 	},
 	/**
 	 * 数据加载失败，重新加载功能
@@ -82,11 +80,6 @@ ScrollLoad.prototype = {
 			_loader.inform(_loader.opts.html);
 			me.load();
 		});
-	},
-	noData: function() {
-		//没有数据的时候调用 1、 提示到底 2、禁用滚动时间
-		this.loader.inform('- 到底啦 -');
-		this.isStopLoad = true;
 	},
 	/**
 	 * 绑定事件
@@ -102,7 +95,7 @@ ScrollLoad.prototype = {
 			}
 
 			//给外部的事件函数
-			me.scroll(scrollTop);
+			me.opts.scroll.call(me, scrollTop);
 		});
 	},
 	/**

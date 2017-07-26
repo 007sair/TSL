@@ -256,10 +256,9 @@ TSL.prototype = {
 	 */
 	reload: function() {
 		var me = this;
-		var _loader = this.loader;
-		_loader.inform('<input value="重新加载" class="reloadBtn" type="button">');
-		_loader.container.find('.' + _loader.className).on('click', '.reloadBtn', function() {
-			_loader.inform(_loader.opts.html);
+		me.loader.loading.html('<input value="重新加载" class="reloadBtn" type="button">');
+		me.loader.container.find('.' + me.loader.className).on('click', '.reloadBtn', function() {
+			me.loader.inform(me.loader.opts.html);
 			me.load();
 		});
 	}
