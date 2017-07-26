@@ -2,6 +2,8 @@
 
 `T`(tab)`S`(scroll)`L`(load)插件
 
+[预览地址](http://007sair.github.io/demo/TSL/index.html)
+
 ## 功能
 
 - tab切换
@@ -173,10 +175,10 @@ TSL插件中单独使用了loading插件，配置如下：
 ```
 {
     styleID: '__loading_style__',   //(type:String) style标签的id属性
-    className: '__loading__',      //(type:String) loading元素的className
-    icon: 'xxx.png',   //(type:String) loading菊花图标
-    size: 20,          //(type:Number) loading大小，影响图标与字体大小
-    multi: 2.5,        //(type:Number) loading大小系数，影响图标的高度
+    className: '__loading__',       //(type:String) loading元素的className
+    icon: 'xxx.png',                //(type:String) loading菊花图标
+    size: 20,                       //(type:Number) loading大小，影响图标与字体大小
+    multi: 2.5,                     //(type:Number) loading大小系数，影响图标的高度
     html: '<i></i><span>加载中, 请稍后...</span>' //(type:String)  loading文本内容
 }
 ```
