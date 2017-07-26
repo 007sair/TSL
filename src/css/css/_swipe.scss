@@ -1,0 +1,51 @@
+/*!
+ * use for swipe.js
+ */
+
+$color-imgback: #f0f0f0;
+$color-pink: #fa4b9b;
+
+.m-swipe {
+	position: relative;
+	background-color: $color-imgback;
+	visibility: hidden;
+	overflow: hidden;
+	min-height: 1rem;
+	.swipe-wrap {
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+	}
+	.swipe-item {
+		width:100%;
+		position: relative;
+		float: left;
+		overflow: hidden;
+		img {
+			width: 100%;
+		}
+	}
+	.swipe-pointer {
+		position: absolute;
+		left: 50%;
+		bottom: rem(15);
+		transform: translate(-50%, 0);
+		span {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 2px 5px;
+			width: 7px;
+			height: 7px;
+			background: rgba(255,255,255,0.5);
+			border-radius: 100%;
+			&.cur {
+				margin: 0 4px;
+				border: 1px solid rgba(0,0,0,0);
+				width: 9px;
+				height: 9px;
+				border-color: #fff;
+				background: $color-pink;
+			}
+		}
+	}
+}

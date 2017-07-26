@@ -1,0 +1,86 @@
+//======================
+// Common
+//======================
+
+$dpr: false !default;
+
+@import "../config";
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.clearfix {
+	@include clearfix;
+}
+
+.sticky { 
+    position: sticky !important;
+    position: -webkit-sticky !important;
+    text-transform: uppercase;
+}
+
+.hide {
+    display: none;
+}
+
+//是否使用dpr的共用单位
+@mixin font-dpr($font-size){
+    font-size: $font-size;
+    @if $dpr {
+        [data-dpr="2"] & {
+            font-size: $font-size * 2;
+        }
+        [data-dpr="3"] & {
+            font-size: $font-size * 3;
+        }
+    }
+}
+
+//common font-size
+$fzs : 12, 14, 16, 18, 20, 22, 24;
+@each $fz in $fzs {
+	.f#{$fz} {
+        @include font-dpr($fz * 1px)
+    }
+}
+
+
+// common price icon
+%rmb {
+    &:before {
+        content: '\00A5';
+    }
+}
+.sp em {
+    @extend %rmb;
+    font-style: normal;
+}
+.mp del {
+    @extend %rmb;
+}
+
+.icon-svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+
+//弹层公共遮罩
+.module-pop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.75);
+	z-index: 1000;
+}

@@ -1,0 +1,385 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$entry-cztj-name: 'entry-cztj';
+$entry-cztj-x: 1.62667rem;
+$entry-cztj-y: 0.8rem;
+$entry-cztj-offset-x: -1.62667rem;
+$entry-cztj-offset-y: -0.8rem;
+$entry-cztj-width: 1.2rem;
+$entry-cztj-height: 1.2rem;
+$entry-cztj-total-width: 7.64rem;
+$entry-cztj-total-height: 6.08rem;
+$entry-cztj-image: '../images/icon-sprite.png';
+$entry-cztj: (1.62667rem, 0.8rem, -1.62667rem, -0.8rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-cztj', );
+$entry-jkt-name: 'entry-jkt';
+$entry-jkt-x: 5.2rem;
+$entry-jkt-y: 0rem;
+$entry-jkt-offset-x: -5.2rem;
+$entry-jkt-offset-y: 0rem;
+$entry-jkt-width: 1.2rem;
+$entry-jkt-height: 1.2rem;
+$entry-jkt-total-width: 7.64rem;
+$entry-jkt-total-height: 6.08rem;
+$entry-jkt-image: '../images/icon-sprite.png';
+$entry-jkt: (5.2rem, 0rem, -5.2rem, 0rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-jkt', );
+$entry-mxt-name: 'entry-mxt';
+$entry-mxt-x: 3.73333rem;
+$entry-mxt-y: 0rem;
+$entry-mxt-offset-x: -3.73333rem;
+$entry-mxt-offset-y: 0rem;
+$entry-mxt-width: 1.2rem;
+$entry-mxt-height: 1.2rem;
+$entry-mxt-total-width: 7.64rem;
+$entry-mxt-total-height: 6.08rem;
+$entry-mxt-image: '../images/icon-sprite.png';
+$entry-mxt: (3.73333rem, 0rem, -3.73333rem, 0rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-mxt', );
+$entry-my-name: 'entry-my';
+$entry-my-x: 0rem;
+$entry-my-y: 2.42667rem;
+$entry-my-offset-x: 0rem;
+$entry-my-offset-y: -2.42667rem;
+$entry-my-width: 1.2rem;
+$entry-my-height: 1.2rem;
+$entry-my-total-width: 7.64rem;
+$entry-my-total-height: 6.08rem;
+$entry-my-image: '../images/icon-sprite.png';
+$entry-my: (0rem, 2.42667rem, 0rem, -2.42667rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-my', );
+$entry-xlb-name: 'entry-xlb';
+$entry-xlb-x: 1.46667rem;
+$entry-xlb-y: 2.42667rem;
+$entry-xlb-offset-x: -1.46667rem;
+$entry-xlb-offset-y: -2.42667rem;
+$entry-xlb-width: 1.2rem;
+$entry-xlb-height: 1.2rem;
+$entry-xlb-total-width: 7.64rem;
+$entry-xlb-total-height: 6.08rem;
+$entry-xlb-image: '../images/icon-sprite.png';
+$entry-xlb: (1.46667rem, 2.42667rem, -1.46667rem, -2.42667rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-xlb', );
+$entry-yyt-name: 'entry-yyt';
+$entry-yyt-x: 2.93333rem;
+$entry-yyt-y: 2.42667rem;
+$entry-yyt-offset-x: -2.93333rem;
+$entry-yyt-offset-y: -2.42667rem;
+$entry-yyt-width: 1.2rem;
+$entry-yyt-height: 1.2rem;
+$entry-yyt-total-width: 7.64rem;
+$entry-yyt-total-height: 6.08rem;
+$entry-yyt-image: '../images/icon-sprite.png';
+$entry-yyt: (2.93333rem, 2.42667rem, -2.93333rem, -2.42667rem, 1.2rem, 1.2rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'entry-yyt', );
+$icon-cancel-name: 'icon-cancel';
+$icon-cancel-x: 5.2rem;
+$icon-cancel-y: 2.8rem;
+$icon-cancel-offset-x: -5.2rem;
+$icon-cancel-offset-y: -2.8rem;
+$icon-cancel-width: 0.32rem;
+$icon-cancel-height: 0.32rem;
+$icon-cancel-total-width: 7.64rem;
+$icon-cancel-total-height: 6.08rem;
+$icon-cancel-image: '../images/icon-sprite.png';
+$icon-cancel: (5.2rem, 2.8rem, -5.2rem, -2.8rem, 0.32rem, 0.32rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-cancel', );
+$icon-clear-name: 'icon-clear';
+$icon-clear-x: 6.66667rem;
+$icon-clear-y: 5.18667rem;
+$icon-clear-offset-x: -6.66667rem;
+$icon-clear-offset-y: -5.18667rem;
+$icon-clear-width: 0.43rem;
+$icon-clear-height: 0.43rem;
+$icon-clear-total-width: 7.64rem;
+$icon-clear-total-height: 6.08rem;
+$icon-clear-image: '../images/icon-sprite.png';
+$icon-clear: (6.66667rem, 5.18667rem, -6.66667rem, -5.18667rem, 0.43rem, 0.43rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-clear', );
+$icon-fdj-name: 'icon-fdj';
+$icon-fdj-x: 6.66667rem;
+$icon-fdj-y: 4.49333rem;
+$icon-fdj-offset-x: -6.66667rem;
+$icon-fdj-offset-y: -4.49333rem;
+$icon-fdj-width: 0.43rem;
+$icon-fdj-height: 0.43rem;
+$icon-fdj-total-width: 7.64rem;
+$icon-fdj-total-height: 6.08rem;
+$icon-fdj-image: '../images/icon-sprite.png';
+$icon-fdj: (6.66667rem, 4.49333rem, -6.66667rem, -4.49333rem, 0.43rem, 0.43rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-fdj', );
+$icon-fire-name: 'icon-fire';
+$icon-fire-x: 6.66667rem;
+$icon-fire-y: 3.8rem;
+$icon-fire-offset-x: -6.66667rem;
+$icon-fire-offset-y: -3.8rem;
+$icon-fire-width: 0.43rem;
+$icon-fire-height: 0.43rem;
+$icon-fire-total-width: 7.64rem;
+$icon-fire-total-height: 6.08rem;
+$icon-fire-image: '../images/icon-sprite.png';
+$icon-fire: (6.66667rem, 3.8rem, -6.66667rem, -3.8rem, 0.43rem, 0.43rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-fire', );
+$icon-md-name: 'icon-md';
+$icon-md-x: 0rem;
+$icon-md-y: 0.8rem;
+$icon-md-offset-x: 0rem;
+$icon-md-offset-y: -0.8rem;
+$icon-md-width: 1.36rem;
+$icon-md-height: 1.36rem;
+$icon-md-total-width: 7.64rem;
+$icon-md-total-height: 6.08rem;
+$icon-md-image: '../images/icon-sprite.png';
+$icon-md: (0rem, 0.8rem, 0rem, -0.8rem, 1.36rem, 1.36rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-md', );
+$icon-my-gray-name: 'icon-my-gray';
+$icon-my-gray-x: 6.66667rem;
+$icon-my-gray-y: 1.24rem;
+$icon-my-gray-offset-x: -6.66667rem;
+$icon-my-gray-offset-y: -1.24rem;
+$icon-my-gray-width: 0.67rem;
+$icon-my-gray-height: 0.67rem;
+$icon-my-gray-total-width: 7.64rem;
+$icon-my-gray-total-height: 6.08rem;
+$icon-my-gray-image: '../images/icon-sprite.png';
+$icon-my-gray: (6.66667rem, 1.24rem, -6.66667rem, -1.24rem, 0.67rem, 0.67rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-my-gray', );
+$icon-my-name: 'icon-my';
+$icon-my-x: 6.66667rem;
+$icon-my-y: 2.17333rem;
+$icon-my-offset-x: -6.66667rem;
+$icon-my-offset-y: -2.17333rem;
+$icon-my-width: 0.67rem;
+$icon-my-height: 0.67rem;
+$icon-my-total-width: 7.64rem;
+$icon-my-total-height: 6.08rem;
+$icon-my-image: '../images/icon-sprite.png';
+$icon-my: (6.66667rem, 2.17333rem, -6.66667rem, -2.17333rem, 0.67rem, 0.67rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-my', );
+$icon-mypt-name: 'icon-mypt';
+$icon-mypt-x: 2.66667rem;
+$icon-mypt-y: 5.12rem;
+$icon-mypt-offset-x: -2.66667rem;
+$icon-mypt-offset-y: -5.12rem;
+$icon-mypt-width: 1.68rem;
+$icon-mypt-height: 0.43rem;
+$icon-mypt-total-width: 7.64rem;
+$icon-mypt-total-height: 6.08rem;
+$icon-mypt-image: '../images/icon-sprite.png';
+$icon-mypt: (2.66667rem, 5.12rem, -2.66667rem, -5.12rem, 1.68rem, 0.43rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-mypt', );
+$icon-soldout-name: 'icon-soldout';
+$icon-soldout-x: 6.66667rem;
+$icon-soldout-y: 0rem;
+$icon-soldout-offset-x: -6.66667rem;
+$icon-soldout-offset-y: 0rem;
+$icon-soldout-width: 0.97rem;
+$icon-soldout-height: 0.97rem;
+$icon-soldout-total-width: 7.64rem;
+$icon-soldout-total-height: 6.08rem;
+$icon-soldout-image: '../images/icon-sprite.png';
+$icon-soldout: (6.66667rem, 0rem, -6.66667rem, 0rem, 0.97rem, 0.97rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-soldout', );
+$icon-time-name: 'icon-time';
+$icon-time-x: 6.66667rem;
+$icon-time-y: 3.10667rem;
+$icon-time-offset-x: -6.66667rem;
+$icon-time-offset-y: -3.10667rem;
+$icon-time-width: 0.43rem;
+$icon-time-height: 0.43rem;
+$icon-time-total-width: 7.64rem;
+$icon-time-total-height: 6.08rem;
+$icon-time-image: '../images/icon-sprite.png';
+$icon-time: (6.66667rem, 3.10667rem, -6.66667rem, -3.10667rem, 0.43rem, 0.43rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-time', );
+$icon-title-name: 'icon-title';
+$icon-title-x: 0rem;
+$icon-title-y: 0rem;
+$icon-title-offset-x: 0rem;
+$icon-title-offset-y: 0rem;
+$icon-title-width: 3.46667rem;
+$icon-title-height: 0.53rem;
+$icon-title-total-width: 7.64rem;
+$icon-title-total-height: 6.08rem;
+$icon-title-image: '../images/icon-sprite.png';
+$icon-title: (0rem, 0rem, 0rem, 0rem, 3.46667rem, 0.53rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'icon-title', );
+$mark-czt-name: 'mark-czt';
+$mark-czt-x: 5.33333rem;
+$mark-czt-y: 3.89333rem;
+$mark-czt-offset-x: -5.33333rem;
+$mark-czt-offset-y: -3.89333rem;
+$mark-czt-width: 1.06667rem;
+$mark-czt-height: 0.96rem;
+$mark-czt-total-width: 7.64rem;
+$mark-czt-total-height: 6.08rem;
+$mark-czt-image: '../images/icon-sprite.png';
+$mark-czt: (5.33333rem, 3.89333rem, -5.33333rem, -3.89333rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-czt', );
+$mark-dpt-name: 'mark-dpt';
+$mark-dpt-x: 2.66667rem;
+$mark-dpt-y: 3.89333rem;
+$mark-dpt-offset-x: -2.66667rem;
+$mark-dpt-offset-y: -3.89333rem;
+$mark-dpt-width: 1.06667rem;
+$mark-dpt-height: 0.96rem;
+$mark-dpt-total-width: 7.64rem;
+$mark-dpt-total-height: 6.08rem;
+$mark-dpt-image: '../images/icon-sprite.png';
+$mark-dpt: (2.66667rem, 3.89333rem, -2.66667rem, -3.89333rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-dpt', );
+$mark-jkt-name: 'mark-jkt';
+$mark-jkt-x: 5.2rem;
+$mark-jkt-y: 1.46667rem;
+$mark-jkt-offset-x: -5.2rem;
+$mark-jkt-offset-y: -1.46667rem;
+$mark-jkt-width: 1.06667rem;
+$mark-jkt-height: 1.06667rem;
+$mark-jkt-total-width: 7.64rem;
+$mark-jkt-total-height: 6.08rem;
+$mark-jkt-image: '../images/icon-sprite.png';
+$mark-jkt: (5.2rem, 1.46667rem, -5.2rem, -1.46667rem, 1.06667rem, 1.06667rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-jkt', );
+$mark-kbt-name: 'mark-kbt';
+$mark-kbt-x: 0rem;
+$mark-kbt-y: 5.12rem;
+$mark-kbt-offset-x: 0rem;
+$mark-kbt-offset-y: -5.12rem;
+$mark-kbt-width: 1.06667rem;
+$mark-kbt-height: 0.96rem;
+$mark-kbt-total-width: 7.64rem;
+$mark-kbt-total-height: 6.08rem;
+$mark-kbt-image: '../images/icon-sprite.png';
+$mark-kbt: (0rem, 5.12rem, 0rem, -5.12rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-kbt', );
+$mark-rqt-name: 'mark-rqt';
+$mark-rqt-x: 4rem;
+$mark-rqt-y: 3.89333rem;
+$mark-rqt-offset-x: -4rem;
+$mark-rqt-offset-y: -3.89333rem;
+$mark-rqt-width: 1.06667rem;
+$mark-rqt-height: 0.96rem;
+$mark-rqt-total-width: 7.64rem;
+$mark-rqt-total-height: 6.08rem;
+$mark-rqt-image: '../images/icon-sprite.png';
+$mark-rqt: (4rem, 3.89333rem, -4rem, -3.89333rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-rqt', );
+$mark-tzmd-name: 'mark-tzmd';
+$mark-tzmd-x: 1.33333rem;
+$mark-tzmd-y: 3.89333rem;
+$mark-tzmd-offset-x: -1.33333rem;
+$mark-tzmd-offset-y: -3.89333rem;
+$mark-tzmd-width: 1.06667rem;
+$mark-tzmd-height: 0.96rem;
+$mark-tzmd-total-width: 7.64rem;
+$mark-tzmd-total-height: 6.08rem;
+$mark-tzmd-image: '../images/icon-sprite.png';
+$mark-tzmd: (1.33333rem, 3.89333rem, -1.33333rem, -3.89333rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-tzmd', );
+$mark-xpt-name: 'mark-xpt';
+$mark-xpt-x: 1.33333rem;
+$mark-xpt-y: 5.12rem;
+$mark-xpt-offset-x: -1.33333rem;
+$mark-xpt-offset-y: -5.12rem;
+$mark-xpt-width: 1.06667rem;
+$mark-xpt-height: 0.93rem;
+$mark-xpt-total-width: 7.64rem;
+$mark-xpt-total-height: 6.08rem;
+$mark-xpt-image: '../images/icon-sprite.png';
+$mark-xpt: (1.33333rem, 5.12rem, -1.33333rem, -5.12rem, 1.06667rem, 0.93rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-xpt', );
+$mark-yxt-name: 'mark-yxt';
+$mark-yxt-x: 0rem;
+$mark-yxt-y: 3.89333rem;
+$mark-yxt-offset-x: 0rem;
+$mark-yxt-offset-y: -3.89333rem;
+$mark-yxt-width: 1.06667rem;
+$mark-yxt-height: 0.96rem;
+$mark-yxt-total-width: 7.64rem;
+$mark-yxt-total-height: 6.08rem;
+$mark-yxt-image: '../images/icon-sprite.png';
+$mark-yxt: (0rem, 3.89333rem, 0rem, -3.89333rem, 1.06667rem, 0.96rem, 7.64rem, 6.08rem, '../images/icon-sprite.png', 'mark-yxt', );
+$spritesheet-width: 7.64rem;
+$spritesheet-height: 6.08rem;
+$spritesheet-image: '../images/icon-sprite.png';
+$spritesheet-sprites: ($entry-cztj, $entry-jkt, $entry-mxt, $entry-my, $entry-xlb, $entry-yyt, $icon-cancel, $icon-clear, $icon-fdj, $icon-fire, $icon-md, $icon-my-gray, $icon-my, $icon-mypt, $icon-soldout, $icon-time, $icon-title, $mark-czt, $mark-dpt, $mark-jkt, $mark-kbt, $mark-rqt, $mark-tzmd, $mark-xpt, $mark-yxt, );
+$spritesheet: (7.64rem, 6.08rem, '../images/icon-sprite.png', $spritesheet-sprites, );
+
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+
+  /** 
+   * 将position换成百分比的写法，参考自：https://github.com/banricho/webLog/issues/1
+   */
+  
+  $offset_x: nth($sprite, 3);
+  $offset_y: nth($sprite, 4);
+  $width: nth($sprite, 5);
+  $height: nth($sprite, 6);
+  $total_width: nth($sprite, 7);
+  $total_height: nth($sprite, 8);
+
+  //分母为0时让其为1rem，解决除法分母为0时报错的bug
+  $x_fm: if( (($width - $total_width) == 0) , 1rem, ($width - $total_width));
+  $y_fm: if( (($height - $total_height) == 0) , 1rem, ($height - $total_height));
+
+  background-position: percentage($offset_x / $x_fm) percentage($offset_y / $y_fm);
+
+  /**
+   * 这是rem的position
+   */
+  //background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+  background-size: 7.64rem 6.08rem;
+}
+
+@mixin sprite($sprite) {
+  //@include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+在sass文件中的调用方法：
+@include sprites($spritesheet-sprites, $url);
+
+参数$url使用方法：
+  1. 不填时默认使用插件生成的地址
+  2. 如何填入？举例说明：
+        $online: true; //需要根据变量切换线上与线下图片链接
+        $sprite-icons: '../images/icon-sprite.png'; //默认线下
+        @if $online {
+          $sprite-icons: 'http://xxx.xxx.icon-sprite.png'; //此处放线上链接
+        } 
+        @include sprites($spritesheet-sprites, $sprite-icons); //此处调用，传入第二个参数
+*/
+
+@mixin sprites($sprites, $url: '../images/icon-sprite.png') {
+  %sprite-common {
+    background-image: url($url);
+    background-size: 7.64rem 6.08rem;
+  }
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @extend %sprite-common;
+      @include sprite($sprite);
+    }
+  }
+}

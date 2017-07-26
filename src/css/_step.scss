@@ -1,0 +1,148 @@
+/*!
+ * 团长免单
+ */
+
+/**
+ * 团长免单
+ */
+$step-color: #666;
+$step-color-cur: #ff4a4a;
+%status-active { //选中状态
+	.num {
+		border-color: $step-color-cur;
+		background-color: $step-color-cur;
+		color: #fff;
+	}
+	.desc {
+		color: $step-color-cur;
+	}
+}
+
+.g-step {
+	$numwidth: 40;
+	$steps: 4;
+	$space: $steps - 1;
+	$width: 1 / $space;
+	
+	//todo: 多个自适应
+	$offset: 1 / ($steps * 2) * 100%; 
+
+	display: block;
+	margin-top: rem(20);
+	padding: rem(16);
+	font-size: rem(24);
+	color: $step-color;
+	background-color: #fff;
+	.title{
+		@include clearfix;
+		line-height: rem(32);
+		.rule {
+			@include sideArrow(12, #666);
+			float: right;
+			font-size: rem(26);
+			color: #666;
+		}
+		h3 {
+			background: url(http://img.miyabaobei.com/d1/p5/2017/05/25/f2/f7/f2f7ae6de2596be1434b458971f989ea947645181.png) no-repeat;
+			height: rem(32);
+			background-size: auto rem(32);
+			font-size: 0;
+		}
+	}
+	.stepbar {
+		position: relative;
+		margin: rem(50) auto rem(100) auto;
+		width: 75%;
+		height: rem(16);
+		background-color: #f2f2f2;
+		border-top: 1px solid #ebebeb;
+		border-bottom: 1px solid #ebebeb;
+		ul {
+			@include flexbox;
+			position: relative;
+			top: rem(-12);
+			margin: #{0} -17%; //todo: 多个自适应
+		}
+		li {
+			@include flex(1);
+			position: relative;
+			text-align: center;
+		}
+		.num {
+			position: relative;
+			display: inline-block;
+			width: rem($numwidth);
+			height: rem($numwidth);
+			border: 1px solid #ebebeb;
+			border-radius: 100%;
+			background-color: #fff;
+			color: $step-color-cur;
+			z-index: 5;
+			box-sizing: border-box;
+		}
+		.desc {
+			margin-top: 5px;
+		}
+		&:after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			content: '';
+			display: block;
+			background-color: $step-color-cur;
+			border-radius: 0 1em 1em 0;
+		}
+	}
+	
+	@function getWidth($step: 1) {
+		@if $step == 1 {
+			@return $width / 2 * 100%;
+		} @else if $step == $steps {
+			@return $width * ($step - 1) * 100%;
+		} @else {
+			@return (($width * ($step - 1)) + ($width / 2)) * 100%;
+		}
+	}
+
+	[data-step="1"] {
+		&:after {
+			width: getWidth(1);
+		}
+		li:nth-child(1) {
+			@extend %status-active;
+		}
+	}
+	[data-step="2"] {
+		&:after {
+			width: getWidth(2);
+		}
+		li:nth-child(1), li:nth-child(2) {
+			@extend %status-active;
+		}
+	}
+	[data-step="3"] {
+		&:after {
+			width: getWidth(3);
+		}
+		li:nth-child(1), li:nth-child(2), li:nth-child(3) {
+			@extend %status-active;
+		}
+	}
+	[data-step="4"] {
+		&:after {
+			width: getWidth(4);
+		}
+		li:nth-child(1), li:nth-child(2), li:nth-child(3), li:nth-child(4) {
+			@extend %status-active;
+		}
+	}
+
+	//粉色皮肤
+	&.skin-pink {
+		background-color: #ffece8;
+		.stepbar {
+			background-color: #fff;
+		}
+	}
+}

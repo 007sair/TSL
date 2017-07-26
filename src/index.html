@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection"content="telephone=no, email=no" />
+<title>TSL</title>
+<link href="css/main.css" rel="stylesheet">
+<script>!function(e,t){function i(){var t=n.getBoundingClientRect().width;t/m>640&&(t=640*m);var i=t/10;n.style.fontSize=i+"px",d.rem=e.rem=i}var a,r=e.document,n=r.documentElement,o=r.querySelector('meta[name="viewport"]'),l=r.querySelector('meta[name="flexible"]'),m=0,s=0,d=t.flexible||(t.flexible={});if(o){console.warn("将根据已有的meta标签来设置缩放比例");var p=o.getAttribute("content").match(/initial\-scale=([\d\.]+)/);p&&(s=parseFloat(p[1]),m=parseInt(1/s))}else if(l){var c=l.getAttribute("content");if(c){var u=c.match(/initial\-dpr=([\d\.]+)/),f=c.match(/maximum\-dpr=([\d\.]+)/);u&&(m=parseFloat(u[1]),s=parseFloat((1/m).toFixed(2))),f&&(m=parseFloat(f[1]),s=parseFloat((1/m).toFixed(2)))}}if(!m&&!s){var v=(e.navigator.appVersion.match(/android/gi),e.navigator.appVersion.match(/iphone/gi)),h=e.devicePixelRatio;m=v?h>=3&&(!m||m>=3)?3:h>=2&&(!m||m>=2)?2:1:1,s=1/m}if(n.setAttribute("data-dpr",m),!o)if(o=r.createElement("meta"),o.setAttribute("name","viewport"),o.setAttribute("content","initial-scale="+s+", maximum-scale="+s+", minimum-scale="+s+", user-scalable=no"),n.firstElementChild)n.firstElementChild.appendChild(o);else{var x=r.createElement("div");x.appendChild(o),r.write(x.innerHTML)}e.addEventListener("resize",function(){clearTimeout(a),a=setTimeout(i,300)},!1),e.addEventListener("pageshow",function(e){e.persisted&&(clearTimeout(a),a=setTimeout(i,300))},!1),"complete"===r.readyState?r.body.style.fontSize=12*m+"px":r.addEventListener("DOMContentLoaded",function(e){r.body.style.fontSize=12*m+"px"},!1),i(),d.dpr=e.dpr=m,d.refreshRem=i,d.rem2px=function(e){var t=parseFloat(e)*this.rem;return"string"==typeof e&&e.match(/rem$/)&&(t+="px"),t},d.px2rem=function(e){var t=parseFloat(e)/this.rem;return"string"==typeof e&&e.match(/px$/)&&(t+="rem"),t}}(window,window.lib||(window.lib={}));</script>
+</head>
+<body>
+
+<div class="wrapper">
+
+ 	<header>
+		<a href="#back" class="left-btn"></a>
+		<a href="#my" class="right-btn"><i class="icon-my"></i></a>
+		<h1>Tab Sroll Load</h1>
+	</header> 
+
+	<img src="https://img04.miyabaobei.com/d1/p5/2017/07/24/bd/51/bd516b8113c8dc28d0bf57a2b1efbc68798228193.jpg" width="100%" alt="">
+ 
+	<div class="J_tab">
+		<div class="tsl-tab">
+			<div class="J_iscroll">
+				<ul>
+					<li _id="1" class="active"><i class="sprite-icon sprite-icon-6"></i>首页</li>
+					<li _id="2"><i class="sprite-icon sprite-icon-4"></i>母婴</li>
+					<li _id="3"><i class="sprite-icon sprite-icon-8"></i>玩具</li>
+					<li _id="4"><i class="sprite-icon sprite-icon-7"></i>童装</li>
+					<li _id="5"><i class="sprite-icon sprite-icon-1"></i>百货</li>
+					<li _id="6"><i class="sprite-icon sprite-icon-5"></i>美妆</li>
+					<li _id="7"><i class="sprite-icon sprite-icon-3"></i>美食</li>
+					<li _id="8"><i class="sprite-icon sprite-icon-9"></i>孕产</li>
+					<li _id="9"><i class="sprite-icon sprite-icon-2"></i>进口</li>
+				</ul>
+			</div>
+		</div>
+	</div>  
+	
+	<div class="tsl-cont J_cont">
+		<!-- 这里为空，js会处理这块 -->
+	</div>
+
+</div>
+
+
+<script id="gItems" type="text/x-dot-template">
+{{ for (var i = 0; i < it.length; i++) { }}
+<div class="defaultBlock">
+<a href="#link">
+	<div class="lt">
+		<img src="{{=it[i].picture}}" onerror="this.src='http://www.mia.com/resources/images/normal/normal447_447.jpg';" alt="">
+		<i class="mark mark-jkt"></i>
+	</div>
+	<div class="rt">
+		<h5>{{=it[i].name}}</h5>
+		<p class="desc">{{=it[i].intro}}</p>
+		<p class="num">已售<span>{{=it[i].sale_count}}</span>件</p>
+		<div class="sum">
+			<p class="mp">单独购买<del>{{=it[i].sale_price}}</del></p>
+			<p class="sp">{{=it[i].min_person}}人团<em>{{=it[i].groupon_price}}</em></p>
+		</div>
+		<button><span>去开团</span></button>
+	</div>
+</a>
+</div>
+{{ } }}
+</script>
+
+
+<script src="http://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+<script src="http://cdn.bootcss.com/dot/1.1.2/doT.min.js"></script>
+</body>
+
+<script>
+$(function() {
+
+	//凡是dev相关的，正式环境都不用管
+	var dev = true;
+
+	/**
+	 * 渲染dom
+	 * tips：此函数在调用时加了call，所以此时的this为TSL的实例对象
+	 */
+	function renderList(arr, tab_index) { 
+		var me = this;
+
+		if (dev) { //测试使用，打乱商品顺序
+			utils.shuffle(arr);
+		};
+
+		arr.forEach(function (item, index) {
+			if (dev) { //测试使用
+				item.name = me.$tab.find('li').eq(tab_index).text() + index;
+			}
+			item.sale_price = utils.fomatFloat(item.sale_price);
+			item.groupon_price = utils.fomatFloat(item.groupon_price);
+			item.link = utils.sku2link(item.sku);
+		});
+
+		var $elembox = me.$cont.eq(tab_index).find('.' + me.opts.className.items);
+		var interText = doT.template($("#gItems").text());
+
+		$elembox.append(interText(arr));
+	}
+
+	new TSL({
+		render: function(cb) {
+			var me = this;
+			var curTab = me.tabs[me.curTabIndex];
+
+			if (curTab.isEnd) {
+				me.loader.inform('- 到底啦 -');
+				return false;
+			}
+
+			if (this.xhr) {
+				this.xhr.abort()
+			}
+
+			this.xhr = $.ajax({
+				url: 'images/data/common_list.json',
+				type: 'get',
+				data: {
+					page: curTab.page,
+					tab: me.curTabIndex,
+					id: me.$tab.find('li').eq(me.curTabIndex).attr('_id')
+				},
+				dataType: 'json',
+				success: function (data) {
+					
+					if (curTab.page >= 3) { //测试专用
+						data.flag = 0;
+					}
+
+					if (data.flag == 1) {
+						//渲染数据，传入数据、当前被渲染tab索引
+						renderList.call(me, data.data_list, me.curTabIndex);
+
+						curTab.page++;
+						me.loader.inform('- 上滑继续加载 -');
+					} else {
+						if (data.flag == 0 || !data.data_list.length) {
+							curTab.isEnd = true;
+							me.loader.inform('- 到底啦 -');
+						}
+					}
+
+					//必须得有
+					curTab.isRender = true;
+					cb && cb();
+				},
+				error: function () {
+					console.log('ajax error');
+					me.reload();
+				}
+			});
+		}
+	});
+
+
+})
+</script>
+</html>

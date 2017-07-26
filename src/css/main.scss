@@ -1,0 +1,145 @@
+/**
+ * Tools
+ */
+@import "base/mixin";
+@import "base/rem";
+@import "base/css3";
+
+/**
+ * Init Styles
+ */
+@import "base/reset";
+@import "base/media";
+@import "base/common";
+
+/**
+ * Vars
+ */
+$color-red: #ff4a4a;
+$rmb: '\00A5'; //字符串：¥
+
+
+/**
+ * Images Url
+ */
+$online: null;
+
+$url-icons: '../images/icons.png';
+$sprite-icons: '../images/icon-sprite.png';
+
+@if $online {
+	$url-icons: '//img.miyabaobei.com/d1/p5/2017/04/27/34/5a/345a7747076eee2b8b52e6196cc9936b626362613.png';
+	$sprite-icons: '//img.miyabaobei.com/d1/p5/2017/07/06/76/11/7611ce764dcc472e04eda4affdbdd7ba114994748.png';
+}
+
+@import "icons"; //topbar icons
+
+@import "list"; //列表
+
+/*!
+ * sprites
+ */
+@import "_sprites.scss";
+@include sprites($spritesheet-sprites, $sprite-icons);
+
+
+/**
+ * Page styles
+ */
+html, body {
+	background-color: #f6f6f6;
+}
+
+.wrapper {
+	margin: 0 auto;
+	max-width: 640px;
+}
+
+header {
+	$height: 88;
+	@include clearfix;
+	position: relative;
+	height: rem($height);
+	line-height: rem($height);
+	background-color: #fff;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+	h1 {
+		position: absolute;
+		top: 0;
+		left: rem($height);
+		right: rem($height);
+		height: 100%;
+		overflow: hidden;
+		font-size: rem(34);
+		text-align: center;
+		font-weight: normal;
+		color: #333;
+		i {
+			display: block;
+			margin: rem(($height - 40) / 2) auto 0;
+		}
+	}
+	.left-btn {
+		position: relative;
+		float: left;
+		width: rem($height);
+		height: 100%;
+		&:after {
+			position: absolute;
+			content: '';
+			top: 50%;
+			left: 50%;
+			border-top: 1px solid #5f646e;
+			border-left: 1px solid #5f646e;
+			width: rem(25);
+			height: rem(25);
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+	}
+	.right-btn {
+		float: right;
+		width: rem($height);
+		height: 100%;
+		i {
+			display: block;
+			margin: rem(($height - 50) / 2) auto 0;
+		}
+	}
+}
+
+.tsl-tab {
+	$red: #ff5757;
+	$red-active: #f73838;
+	position: relative;
+	background-color: $red;
+	overflow: hidden;
+	height: rem(106);
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
+	ul {
+		position: absolute;
+		height: 100%;
+		white-space: nowrap;
+		font-size: 0;
+	}
+	li {
+		display: inline-block;
+		vertical-align: middle;
+		width: rem(164);
+		height: 100%;
+		font-size: rem(26);
+		text-align: center;
+		color: #fff;
+		i {
+			display: block;
+			margin: rem(10) auto 0;
+			min-height: rem(50);
+		}
+		&.active {
+			background-color: $red-active;
+		}
+	}
+}
+
+.defaultBlock {
+	@extend %module-list-single;
+}

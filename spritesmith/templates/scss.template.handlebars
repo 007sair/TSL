@@ -1,0 +1,151 @@
+{
+  // Default options
+  'functions': true,
+  'variableNameTransforms': ['dasherize']
+}
+
+{{#block "sprites-comment"}}
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+{{/block}}
+{{#block "sprites"}}
+{{#each sprites}}
+${{strings.name_name}}: '{{name}}';
+${{strings.name_x}}: {{px.x}};
+${{strings.name_y}}: {{px.y}};
+${{strings.name_offset_x}}: {{px.offset_x}};
+${{strings.name_offset_y}}: {{px.offset_y}};
+${{strings.name_width}}: {{px.width}};
+${{strings.name_height}}: {{px.height}};
+${{strings.name_total_width}}: {{px.total_width}};
+${{strings.name_total_height}}: {{px.total_height}};
+${{strings.name_image}}: '{{{escaped_image}}}';
+${{strings.name}}: ({{px.x}}, {{px.y}}, {{px.offset_x}}, {{px.offset_y}}, {{px.width}}, {{px.height}}, {{px.total_width}}, {{px.total_height}}, '{{{escaped_image}}}', '{{name}}', );
+{{/each}}
+{{/block}}
+{{#block "spritesheet"}}
+${{spritesheet_info.strings.name_width}}: {{spritesheet.px.width}};
+${{spritesheet_info.strings.name_height}}: {{spritesheet.px.height}};
+${{spritesheet_info.strings.name_image}}: '{{{spritesheet.escaped_image}}}';
+${{spritesheet_info.strings.name_sprites}}: ({{#each sprites}}${{strings.name}}, {{/each}});
+${{spritesheet_info.strings.name}}: ({{spritesheet.px.width}}, {{spritesheet.px.height}}, '{{{spritesheet.escaped_image}}}', ${{spritesheet_info.strings.name_sprites}}, );
+{{/block}}
+
+{{#block "sprite-functions-comment"}}
+{{#if options.functions}}
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+{{/if}}
+{{/block}}
+{{#block "sprite-functions"}}
+{{#if options.functions}}
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+
+  /** 
+   * 将position换成百分比的写法，参考自：https://github.com/banricho/webLog/issues/1
+   */
+  
+  $offset_x: nth($sprite, 3);
+  $offset_y: nth($sprite, 4);
+  $width: nth($sprite, 5);
+  $height: nth($sprite, 6);
+  $total_width: nth($sprite, 7);
+  $total_height: nth($sprite, 8);
+
+  //分母为0时让其为1rem，解决除法分母为0时报错的bug
+  $x_fm: if( (($width - $total_width) == 0) , 1rem, ($width - $total_width));
+  $y_fm: if( (($height - $total_height) == 0) , 1rem, ($height - $total_height));
+
+  background-position: percentage($offset_x / $x_fm) percentage($offset_y / $y_fm);
+
+  /**
+   * 这是rem的position
+   */
+  //background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+  background-size: {{spritesheet.px.width}} {{spritesheet.px.height}};
+}
+
+@mixin sprite($sprite) {
+  //@include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+{{/if}}
+{{/block}}
+
+{{#block "spritesheet-functions-comment"}}
+{{#if options.functions}}
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+在sass文件中的调用方法：
+@include sprites($spritesheet-sprites, $url);
+
+参数$url使用方法：
+  1. 不填时默认使用插件生成的地址
+  2. 如何填入？举例说明：
+        $online: true; //需要根据变量切换线上与线下图片链接
+        $sprite-icons: '../images/icon-sprite.png'; //默认线下
+        @if $online {
+          $sprite-icons: 'http://xxx.xxx.icon-sprite.png'; //此处放线上链接
+        } 
+        @include sprites($spritesheet-sprites, $sprite-icons); //此处调用，传入第二个参数
+*/
+
+{{/if}}
+{{/block}}
+{{#block "spritesheet-functions"}}
+{{#if options.functions}}
+@mixin sprites($sprites, $url: '{{{spritesheet.escaped_image}}}') {
+  %sprite-common {
+    background-image: url($url);
+    background-size: {{spritesheet.px.width}} {{spritesheet.px.height}};
+  }
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @extend %sprite-common;
+      @include sprite($sprite);
+    }
+  }
+}
+{{/if}}
+{{/block}}

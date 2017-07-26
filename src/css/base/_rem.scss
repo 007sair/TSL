@@ -1,0 +1,46 @@
+//------------------
+// rem单位换算
+//------------------
+
+//config里没有设置的话就用如下变量
+$isPX: false !default; //[是否使用px单位] 		true => 始终返回640比例的尺寸   false => 返回rem单位
+$design: 750 !default; //[当前设计稿尺寸]		640/750
+$output: 750 !default; //[需要输出的数值类型]  	640/750 	修改数值需修改对应的js   640=>rem.js   750=>flexible.js
+
+//config变量
+@import "../config";
+
+
+/**
+ * 根据当前设计稿进行单位转换
+ * @param  {[number]} $px 	[不带单位的数值]
+ * @return {[string]}     	[返回rem或px 取决于$isPX]
+ */
+@function rem($px) {
+	@if $design == 750 { //如果设计稿为750
+		@if $isPX { //750输出640比例的px
+			@return ($px * 640 / 750) / 2 * 1px;
+		} @else { //输出rem
+			@if $output == 640 {
+				@return ($px * 640 / 750) / 40 * 1rem;
+			}
+			@if $output == 750 {
+				@return $px / 75 * 1rem;
+			}
+		}
+	}
+	@if $design == 640 { //如果设计稿为640
+		@if $isPX {
+			@return $px / 2 * 1px;
+		} @else { //输出rem
+			@if $output == 640 {
+				@return $px / 40 * 1rem;
+			}
+			@if $output == 750 {
+				@return ($px * 750 / 640) / 75 * 1rem;
+			}
+		}
+	}
+	@warn "error $px not 640 or 750";
+	@return $px / 40 * 1rem;
+}

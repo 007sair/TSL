@@ -1,0 +1,199 @@
+/**
+ * Tools
+ */
+@import "base/mixin";
+@import "base/rem";
+@import "base/css3";
+
+/**
+ * Init Styles
+ */
+@import "base/reset";
+@import "base/media";
+//@import "base/common";
+
+/**
+ * Vars
+ */
+$color-red: #ff4a4a;
+$rmb: '\00A5'; //字符串：¥
+
+
+/**
+ * Images Url
+ */
+$online: 1;
+
+$url-icons: '../images/icons.png';
+$sprite-icons: '../images/icon-sprite.png';
+
+@if $online {
+	$url-icons: '//img.miyabaobei.com/d1/p5/2017/04/27/34/5a/345a7747076eee2b8b52e6196cc9936b626362613.png';
+	$sprite-icons: '//img.miyabaobei.com/d1/p5/2017/05/27/bd/14/bd1406bf4427875b6ea64fd95ee8741e571852976.png';
+}
+
+html, body {
+	background-color: #f6f6f6;
+}
+
+//============= 5.5 =================//
+
+/*!
+ * Home Styles
+ */
+
+.g-home-mod {
+	margin-top: 10px;
+	.title {
+		padding: 0 rem(20);
+		line-height: rem(40);
+		font-size: rem(26);
+		.rt {
+			float: right;
+			strong {
+				color: $color-red;
+			}
+		}
+		.icon-tit {
+			display: inline-block;
+			width: rem(310);
+			height: rem(40);
+			background: url('//img.miyabaobei.com/d1/p5/2017/05/31/fe/10/fe101a9f87e24c1af0784f7a9d28b430244043045.png') no-repeat;
+			background-size: rem(310) auto;
+		}
+	}
+	.cont {
+		margin-top: rem(5);
+		padding: rem(20) 0;
+		background-color: #fff;
+		ul {
+			font-size: 0;
+			margin-bottom: rem(20);
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		li {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: rem(40);
+			width: rem(165);
+			white-space: normal;
+			font-size: rem(24);
+			> a {
+				display: block;
+				color: #333;
+			}
+			&:last-child {
+				margin-right: rem(0);
+			}
+		}
+		.imgbox {
+			position: relative;
+			height: rem(165);
+			img {
+				width: 100%;
+				height: 100%;
+			}
+			.person {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				border: 1px solid $color-red;
+				background: rgba(250, 250, 250, 0.86);
+				padding: 0 rem(5);
+				border-radius: rem(7);
+				line-height: 1.4;
+				font-size: rem(22);
+				color: $color-red;
+			}
+		}
+		.tit {
+			@include maxHeight(24, 2, 1.35);
+			margin-top: rem(8);
+		}
+		.sp {
+			line-height: 1.3;
+			font-size: rem(22);
+			color: $color-red;
+			em {
+				margin-left: rem(5);
+				font-size: rem(28);
+				font-weight: bold;
+				font-style: normal;
+				&:before {
+					font-size: rem(22);
+					content: '\00A5';
+				}
+			}
+		}
+		.mp {
+			line-height: 1.3;
+			font-size: rem(20);
+			color: #999;
+			del {
+				margin-left: rem(5);
+				&:before {
+					content: '\00A5';
+				}
+			}
+		}
+		.s-more {
+			position: absolute;
+			padding: 0 rem(20);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			font-size: rem(24);
+			color: #333;
+			flex-direction: column;
+			i {
+				$width: 28;
+				position: relative;
+				display: block;
+				margin-top: rem(5);
+				width: rem($width);
+				height: rem($width);
+				line-height: rem($width);
+				border: 1px solid #666;
+				border-radius: 100%;
+				box-sizing: border-box;
+				text-align: center;
+				svg {
+					width: 1em;
+					height: 1em;
+					stroke-width: 0;
+					stroke: currentColor;
+					fill: currentColor;
+				}
+			}
+		}
+	}
+	.scrollbox {
+		@include scrollbar;
+		padding-left: rem(20);
+		position: relative;
+		> section {
+			display: inline-block;
+			vertical-align: top;
+			height: 100%;
+		}
+	}
+	.btn-more {
+		display: block;
+		margin: rem(20) auto 0;
+		width: rem(665);
+		height: rem(72);
+		line-height: rem(72);
+		border-radius: rem(50);
+		background-color: $color-red;
+		text-align: center;
+		font-size: rem(30);
+		color: #fff;
+		span {
+			@include sideArrow(14, #fff);
+		}
+	}
+}
+

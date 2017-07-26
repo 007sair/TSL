@@ -1,0 +1,27 @@
+{{#block "sprites-comment"}}
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+```html
+<!-- `display: block` sprite -->
+<div class="icon-home"></div>
+
+<!-- `display: inline-block` sprite -->
+<img class="icon-home" />
+```
+*/
+{{/block}}
+
+{{#block "sprites"}}
+{{#each sprites}}.{{name}}, {{/each}}{
+  background-size: {{spritesheet.px.width}} {{spritesheet.px.height}};
+  background-image: url('{{{spritesheet.escaped_image}}}');
+}
+{{#each sprites}}
+.{{name}} {
+  background-position: {{px.offset_x}} {{px.offset_y}};
+  width: {{px.width}};
+  height: {{px.height}};
+}
+{{/each}}
+{{/block}}

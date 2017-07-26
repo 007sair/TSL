@@ -1,0 +1,361 @@
+/**
+ * 拼团 商品详情页
+ */
+
+/**
+ * Tools
+ */
+@import "base/mixin";
+@import "base/rem";
+@import "base/css3";
+
+/**
+ * Init Styles
+ */
+@import "base/reset";
+
+$color-red: #ff4a4a;
+$rmb: '\00A5'; //字符串：¥
+
+//因为线上使用的640的脚本
+$output: 640;
+
+@import "step"; //团长免单
+
+
+body {
+	background-color: #f6f6f6;
+}
+
+/*!
+ * 拼团 start
+ */
+.group-active-info {
+	@include clearfix;
+	background:#ff4b4a;
+	color:#fff;
+	padding:rem(7.5) rem(20);
+	position: relative;
+	.group-InfoL {
+		float: left;
+		font-size:rem(30);
+		> div {
+			display:inline-block;
+			vertical-align:middle;
+		}
+		strong {
+			font-size:rem(60);
+			padding-left:rem(8);
+			font-weight:500;
+		}
+		.group-mPrice {
+			display:inline-block;
+			height:rem(67);
+			p {
+				line-height:1.2;
+				del {
+					font-size:rem(24);
+				}
+			}
+			i {
+				display:inline-block;
+				height:rem(28);
+				line-height:rem(28);
+				width:rem(96);
+				background:#fee73b;
+				color:#ff4a4a;
+				font-size:rem(22);
+				font-style:normal;
+				text-align:center;
+				border-radius:rem(4);
+				vertical-align:top;
+				padding-top:rem(2);
+			}
+		}
+		strong:before, del:before {
+			content:"\00A5";
+			font-size:rem(30);
+		}
+		del:before {
+			font-size:rem(24);
+		}
+	}
+	.group-InfoR {
+		float: right;
+		text-align:right;
+		color:#fee73b;
+		font-size:rem(24);
+		line-height:rem(34);
+		padding-top:rem(6);
+		> div {
+			line-height: 1.5;
+		}
+	}
+}
+
+.group-user-tit {
+	font-size:rem(24);
+	color:#404040;
+	height:rem(75);
+	line-height:rem(75);
+	background:#f2f2f2;
+	padding:0 rem(20);
+	text-align:left;
+}
+
+.group-user-list {
+	background:#fff;
+	padding:rem(10) rem(20);
+	overflow:hidden;
+	li {
+		margin:rem(30) auto;
+		height:rem(94);
+		position: relative;
+		border-top:rem(2) solid #ff4a4a;
+		border-bottom:rem(2) solid #ff4a4a;
+		border-top-right-radius:rem(83);
+		border-bottom-right-radius:rem(83);
+		margin-left:rem(53);
+		padding:0 rem(184) 0 rem(67);
+		font-size:rem(26);
+		img {
+			height:rem(106);
+			width:rem(106);
+			border-radius:100%;
+			position: absolute;
+			top:rem(-6);
+			left:rem(-53);
+			border:1px solid #d7d7d7;  
+		}
+		.group-user-listCon {
+			@include clearfix;
+			color:#333;
+			padding:rem(10) 0;
+			p {
+				line-height:rem(37);
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+			}
+			.lt {
+				.groud-user-id {
+					font-size:rem(24);
+					color:#888;
+					line-height:rem(29);
+					margin-bottom:rem(4);
+					display:block;
+					overflow:hidden;
+					text-overflow:ellipsis;
+					white-space:nowrap;
+				}
+			}  
+			.rt {
+				width:rem(170);
+				float:right;
+				color:#ff4a4a;
+				text-align:right;
+				.count-down{
+					font-size:rem(24);
+					color:#888;
+					line-height:rem(29);
+					margin-top:rem(4);
+				}
+			}
+		}
+		.go-group-btn {
+			display:inline-block;
+			height:rem(94);
+			line-height:rem(94);
+			width:rem(166);
+			position: absolute;
+			right:0;
+			top:rem(0);
+			background:#ff4a4a;
+			border-top-right-radius:rem(82);
+			border-bottom-right-radius:rem(82);
+			font-size: rem(28);
+			color: #fff;
+			padding: 0 rem(25);
+			box-sizing: border-box;
+			span {
+				@include sideArrow(12, #fff);
+				position: relative;
+			}
+		}
+
+	}
+	li > a {
+		display: block;
+		height: 100%;
+	}
+}
+
+//底部悬浮按钮 两个均等
+.g-fixbtns {
+	display: flex;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: rem(100);
+	border-top: rem(2) solid $color-red;
+	z-index: 1000;
+	> a {
+		@include center-flex(true, true);
+		flex: 1;
+		font-size: rem(30);
+		color: $color-red;
+		border-right: rem(2) solid $color-red;
+		background-color: $color-red;
+		color: #fff;
+		&:last-child {
+			border-right: none;
+		}
+		&.white {
+			background-color: #fff;
+			color: $color-red;
+		}
+	}
+}
+
+//为你推荐
+.group-item-tj {
+	margin-top: rem(15);
+	background-color: #fff;
+	h3 {
+		padding: 0 rem(20);
+		height: rem(86);
+		line-height: rem(86);
+		border-bottom: 1px solid #ebebeb;
+		font-size: rem(28);
+		font-weight: normal;
+	}
+	.items {
+		@include clearfix;
+		padding: rem(30) 0 0 0;
+	}
+	.item {
+		float: left;
+		width: 33.33%;
+		padding: 0 rem(25) rem(25);
+		max-width: rem(250);
+		color: #333;
+		text-align: center;
+		box-sizing: border-box;
+	}
+	.imgbox {
+		position: relative;
+		padding-bottom: 100%;
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.tit {
+		@include ellipsis(2);
+		margin: rem(10) 0 rem(5) 0;
+		font-size: rem(24);
+		line-height: 1.35;
+		height: rem(24 * 1.35 * 2);
+		overflow: hidden;
+	}
+	%rmb {
+	    &:before {
+	        content: '\00A5';
+	    }
+	}
+	.sp em {
+	    @extend %rmb;
+	    font-style: normal;
+	}
+	.mp del {
+	    @extend %rmb;
+	}
+	.sp {
+		@include ellipsis(1);
+		font-size: rem(26);
+		color: $color-red;
+	}
+	.mp {
+		@include ellipsis(1);
+		font-size: rem(24);
+		color: #999;
+	}
+}
+
+.g-fixbtns-zero {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #fff;
+	height: rem(97);
+	border-top: 1px solid #ededed;
+	display: flex;
+	> a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: rem(26);
+		color: #333;
+		flex-direction: column;
+	}
+	.kefu {
+		position: relative;
+		min-width: rem(178);
+		max-width: rem(178);
+		&:after {
+			content: '';
+			position: absolute;
+			right: 0;
+			top: rem(10);
+			bottom: rem(10);
+			width: 1px;
+			background-color: #ededed;
+		}
+	}
+	.cart {
+		position: relative;
+		min-width: rem(165);
+		max-width: rem(165);
+		.num {
+			position: absolute;
+			top: rem(8);
+			right: rem(50);
+			width: rem(24);
+			height: rem(24);
+			line-height: rem(24);
+			background-color: $color-red;
+			border-radius: 100%;
+			color: #fff;
+			text-align: center;
+			font-size: rem(18);
+		}
+	}
+	.btn1 {
+		flex: 1;
+		background-color: $color-red;
+		line-height: 1.4;
+		color: #fff;
+		p {
+			font-size: rem(36);
+		}
+		small {
+			font-size: rem(22);
+			color: #fffefe;
+		}
+	}
+	svg {
+		display: block;
+		margin: rem(10) auto rem(5) auto;
+		width: 1em;
+		height: 1em;
+		stroke-width: 0;
+		stroke: currentColor;
+		fill: currentColor;
+		font-size: rem(38);
+	}
+}

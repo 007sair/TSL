@@ -1,0 +1,28 @@
+/**
+ * sass 配置文件
+ * --------------------
+ * 解决问题:
+ *   1. 根据端的不同，reset样式也会不同
+ *   2. 自动计算输出rem单位
+ * 应用场景:
+ *   设计稿为750px，页面引用了src/js/lib/rem640.js，变量设置如下：
+ *   $design: 750
+ *   $output: 640
+ */
+
+// by media.scss
+$dpr: false; //是否使用dpr  @true： media中自带dpr  common中会有f12 f14...等样式
+
+// by reset.scss
+$device: 'wap';		//设置reset.css  项目重置方案
+
+// by rem.scss
+$isPX: false; 		//是否输出px单位的尺寸
+$design: 750; 		//设计稿尺寸
+
+/**
+ * css实际rem单位 需与js脚本对应
+ *     640  ->  src/js/lib/rem.js  			 ($px / 40 * 1rem)
+ *     750  ->  src/js/lib/flexible.js       ($px / 75 * 1rem)
+ */
+$output: 750;
