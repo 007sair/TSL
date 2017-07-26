@@ -31,7 +31,9 @@
 </div>
 ```
 
-注意：凡是涉及到`J_`开头的`class`，都会在插件内被使用到，如有冲突，请自行修改。其他`class`可随意修改为自己的样式名。
+注意：凡是涉及到`J_`开头的`class`，都会在插件内被使用到，如有冲突，请自行修改。
+
+其他`class`可随意修改为自己的样式名。
 
 
 ### `JS:`
@@ -111,19 +113,19 @@ function renderList(arr) { //ajax请求到的数据，一般为数组类型
 
 options为传入的对象，对象属性与方法如下：
 
-`**options.startPage**`
+**`options.startPage`**
 
 > 类型：`Number`，默认值：1
 
 页面起始页数
 
-`**options.iScroll**`
+**`options.iScroll`**
 
 > 类型：`String`，默认值：'.J_iscroll'
 
 iscroll插件引用的className，注意有个`.`
 
-`**options.className**`
+**`options.className`**
 
 > 类型：`Object`
 
@@ -138,31 +140,31 @@ iscroll插件引用的className，注意有个`.`
 }
 ```
 
-`**options.render(callback)**`
+**`options.render(callback)`**
 
 > 类型：`Function`
 
 渲染函数，在页面滚动到底部及切换tab时触发。`callback`为回调函数
 
-`**options.afterRender(callback)**`
+**`options.afterRender(callback)`**
 
 > 类型：`Function`
 
 `render`函数的`callback`函数执行时会调用`afterRender`
 
-`**options.click($curTab)**`
+**`options.click($curTab)`**
 
 > 类型：`Function`
 
 点击tab时触发，`$curTab`为被点击的li元素，为jquery对象
 
-`**options.scroll(scrollTop)**`
+**`options.scroll(scrollTop)`**
 
 > 类型：`Function`
 
 将`scroll`事件暴露到外面，`scrollTop`为当前滚动值
 
-`**options.loading**`
+**`options.loading`**
 
 > 类型：`Object`
 
