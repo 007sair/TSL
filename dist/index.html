@@ -16,11 +16,11 @@
 
  	<header>
 		<a href="#back" class="left-btn"></a>
-		<a href="#my" class="right-btn"><i class="icon-my"></i></a>
+		<a href="#my" class="right-btn"><i class="icon-my-gray"></i></a>
 		<h1>Tab Sroll Load</h1>
 	</header> 
 
-	<img src="https://img04.miyabaobei.com/d1/p5/2017/07/24/bd/51/bd516b8113c8dc28d0bf57a2b1efbc68798228193.jpg" width="100%" alt="">
+	<img src="images/banner.jpg" width="100%" alt="">
  
 	<div class="J_tab">
 		<div class="tsl-tab">
@@ -53,7 +53,6 @@
 <a href="#link">
 	<div class="lt">
 		<img src="{{=it[i].picture}}" onerror="this.src='http://www.mia.com/resources/images/normal/normal447_447.jpg';" alt="">
-		<i class="mark mark-jkt"></i>
 	</div>
 	<div class="rt">
 		<h5>{{=it[i].name}}</h5>
@@ -77,6 +76,11 @@
 
 <script>
 $(function() {
+
+	$('header').sticky({
+		top: 0
+	})
+
 
 	//凡是dev相关的，正式环境都不用管
 	var dev = true;

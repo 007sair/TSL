@@ -110,6 +110,7 @@ TSL.prototype = {
 				me.tabs.push($.extend(true, {}, me.model));
 				html += sCont;
 			});
+
 		} else {
 			html = sCont;
 			me.tabs.push($.extend(true, {}, me.model));
@@ -127,7 +128,6 @@ TSL.prototype = {
 
 		this.loader.init();  //初始化loading，插入loading需要的样式
 		this.bindEvent();
-
 	},
 	bindClick: function() {
 		var me = this;

@@ -1,14 +1,12 @@
 # TSL
 
-`T`(tab)`S`(scroll)`L`(load)插件
-
-[预览地址](http://007sair.github.io/demo/TSL/index.html)
+全称：Tab-Scroll-Load，[预览地址](http://007sair.github.io/demo/TSL/index.html)
 
 ## 功能
 
-- tab切换
-- tab左右滑动
-- tab悬浮
+- 选项卡切换
+- 选项卡左右滑动（iscroll）
+- 选项卡悬浮（sticky）
 - 上滑翻页加载
 
 ## Usage
@@ -33,19 +31,18 @@
 </div>
 ```
 
-注意：凡是涉及到`J_`开头的`class`，都会在插件内被使用到，如有冲突，请自行修改。
-
-其他`class`可随意修改为自己的样式名。
+**注意：** `J_`开头的`class`，都是`js`需要使用的class，如果冲突，可在配置中进行修改。其他class可随意修改。
 
 
 ### `JS:`
 
 ```
 new TSL({
-    className: {
-        //如果class有冲突，可以在这里重新定义
+    iScroll: '.J_iscroll',
+    className: { //如果class有冲突，可以在这里重新定义
+        tab: 'J_tab'
     },
-    render: function(cb) {
+    render: function(cb) { //cb会在ajax中被调用，功能同afterRender函数
         var me = this;
         var curTab = me.tabs[me.curTabIndex];
 
@@ -54,7 +51,7 @@ new TSL({
             return false;
         }
 
-        if (this.xhr) { //挂起重复ajax
+        if (this.xhr) { //ajax挂起
             this.xhr.abort()
         }
 
@@ -70,8 +67,7 @@ new TSL({
             dataType: 'json',
             success: function (data) {
                 if (data.flag == 1) {
-                    //渲染数据
-                    //call：修改this指向
+                    //渲染数据，call：修改this指向
                     renderList.call(me, data.data_list);
 
                     curTab.page++;
@@ -85,7 +81,7 @@ new TSL({
 
                 //必须得有
                 curTab.isRender = true;
-                cb && cb();
+                cb && cb(); //回调函数
             },
             error: function () {
                 console.log('ajax error');
@@ -95,7 +91,7 @@ new TSL({
     }
 });
 
-function renderList(arr) { //ajax请求到的数据，一般为数组类型
+function renderList(arr) { // arr: ajax请求到的数据，一般为数组类型
     // 注意：此函数的this指向在调用时被call修改过，所以指向TSL实例
     // 举个栗子：
     // this.$conts 等于 $('.J_cont');
@@ -105,15 +101,18 @@ function renderList(arr) { //ajax请求到的数据，一般为数组类型
     // 等于
     // $('.J_cont').eq(index).find('.__items__')
 
-    //this的属性方法，请参考下方API，自行console
+    // this的属性方法，请参考下方API，自行console
 }
 ```
 
 ## API
 
-### new TSL(options);
+```
+//调用方法
+new TSL(options)
+```
 
-options为传入的对象，对象属性与方法如下：
+options的类型为对象，属性、方法如下：
 
 **`options.startPage`**
 
@@ -131,7 +130,7 @@ iscroll插件引用的className，注意有个`.`
 
 > 类型：`Object`
 
-各种需要用到的className
+html中需要使用的className，如有冲突，可自行修改。
 
 ```
 {
@@ -152,7 +151,7 @@ iscroll插件引用的className，注意有个`.`
 
 > 类型：`Function`
 
-`render`函数的`callback`函数执行时会调用`afterRender`
+`render`函数的`callback`执行时触发
 
 **`options.click($curTab)`**
 

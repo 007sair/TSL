@@ -144,32 +144,9 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#ccc}
 .defaultBlock button[disabled=disabled]{background-color:#b5b6b7!important}
 /*!
  * sprites
- */.entry-cztj,.entry-jkt,.entry-mxt,.entry-my,.entry-xlb,.entry-yyt,.icon-cancel,.icon-clear,.icon-fdj,.icon-fire,.icon-md,.icon-my,.icon-my-gray,.icon-mypt,.icon-soldout,.icon-time,.icon-title,.mark-czt,.mark-dpt,.mark-jkt,.mark-kbt,.mark-rqt,.mark-tzmd,.mark-xpt,.mark-yxt{background-image:url(../images/icon-sprite.png);background-size:7.64rem 6.08rem}
-.entry-cztj{background-position:25.2589% 16.3934%;width:1.2rem;height:1.2rem}
-.entry-jkt{background-position:80.7453% 0;width:1.2rem;height:1.2rem}
-.entry-mxt{background-position:57.971% 0;width:1.2rem;height:1.2rem}
-.entry-my{background-position:0 49.7268%;width:1.2rem;height:1.2rem}
-.entry-xlb{background-position:22.7744% 49.7268%;width:1.2rem;height:1.2rem}
-.entry-yyt{background-position:45.5486% 49.7268%;width:1.2rem;height:1.2rem}
-.icon-cancel{background-position:71.0383% 48.6111%;width:.32rem;height:.32rem}
-.icon-clear{background-position:92.4642% 91.7995%;width:.43rem;height:.43rem}
-.icon-fdj{background-position:92.4642% 79.528%;width:.43rem;height:.43rem}
-.icon-fire{background-position:92.4642% 67.2566%;width:.43rem;height:.43rem}
-.icon-md{background-position:0 16.9492%;width:1.36rem;height:1.36rem}
-.icon-my-gray{background-position:95.6481% 22.9205%;width:.67rem;height:.67rem}
-.icon-my{background-position:95.6481% 40.1725%;width:.67rem;height:.67rem}
-.icon-mypt{background-position:44.7428% 90.6195%;width:1.68rem;height:.43rem}
-.icon-soldout{background-position:99.9501% 0;width:.97rem;height:.97rem}
-.icon-time{background-position:92.4642% 54.9853%;width:.43rem;height:.43rem}
-.icon-title{background-position:0 0;width:3.4667rem;height:.53rem}
-.mark-czt{background-position:81.1359% 76.0416%;width:1.0667rem;height:.96rem}
-.mark-dpt{background-position:40.568% 76.0416%;width:1.0667rem;height:.96rem}
-.mark-jkt{background-position:79.1075% 29.2554%;width:1.0667rem;height:1.0667rem}
-.mark-kbt{background-position:0 100%;width:1.0667rem;height:.96rem}
-.mark-rqt{background-position:60.852% 76.0416%;width:1.0667rem;height:.96rem}
-.mark-tzmd{background-position:20.2839% 76.0416%;width:1.0667rem;height:.96rem}
-.mark-xpt{background-position:20.2839% 99.4175%;width:1.0667rem;height:.93rem}
-.mark-yxt{background-position:0 76.0416%;width:1.0667rem;height:.96rem}
+ */.icon-my,.icon-my-gray{background-image:url(../images/icon-sprite.png);background-size:1.6rem .67rem}
+.icon-my-gray{background-position:0 0;width:.67rem;height:.67rem}
+.icon-my{background-position:100.3581% 0;width:.67rem;height:.67rem}
 body,html{background-color:#f6f6f6}
 .wrapper{margin:0 auto;max-width:640px}
 header{position:relative;height:1.1733rem;line-height:1.1733rem;background-color:#fff;-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,.1);box-shadow:0 1px 3px 0 rgba(0,0,0,.1)}
