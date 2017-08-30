@@ -7,16 +7,16 @@
 - 选项卡切换
 - 选项卡左右滑动（iscroll）
 - 选项卡悬浮（sticky）
-- 上滑翻页加载
+- 上滑加载（ajax）
 
 ## Usage
 
 ### `HTML:`
 
 ```
-<div class="J_tab">
+<div class="J_tabWrap">
     <div class="tsl-tab">
-        <div class="J_iscroll">
+        <div class="J_iScroll">
             <ul>
                 <li _id="1" class="active">tab1</li>
                 <li _id="2">tab2</li>
@@ -26,8 +26,10 @@
     </div>
 </div>
 
-<div class="tsl-cont J_cont">
-    <!-- js会将数据渲染到这里 -->
+<div class="tsl-cont J_contWrap">
+    <div class="cont cont-active"></div>
+    <div class="cont"></div>
+    ...
 </div>
 ```
 
@@ -36,52 +38,25 @@
 
 ### `JS:`
 
-```
+```js
 new TSL({
-    iScroll: '.J_iscroll',
-    className: { //如果class有冲突，可以在这里重新定义
-        tab: 'J_tab'
+    iScroll: '.J_iScroll',
+    className: {
+        //如果class有冲突，可以在这里重新定义
     },
-    render: function(cb) { //cb会在ajax中被调用，功能同afterRender函数
+    render: function(cb) {
         var me = this;
-        var curTab = me.tabs[me.curTabIndex];
-
-        if (curTab.isEnd) { //判断当前页面是否全部加载完毕
-            me.loader.inform('- 到底啦 -');
-            return false;
-        }
-
-        if (this.xhr) { //ajax挂起
-            this.xhr.abort()
-        }
-
-        //ajax请求
-        this.xhr = $.ajax({
-            url: 'images/data/common_list.json',
+        //在这里写ajax，具体用法参考src/index.html，这里仅举例说明
+        $.ajax({
+            url: 'xxx.json',
             type: 'get',
-            data: {
-                page: curTab.page,
-                tab: me.curTabIndex,
-                id: me.$tab.find('li').eq(me.curTabIndex).attr('_id')
-            },
+            data: {},
             dataType: 'json',
             success: function (data) {
-                if (data.flag == 1) {
-                    //渲染数据，call：修改this指向
-                    renderList.call(me, data.data_list);
-
-                    curTab.page++;
-                    me.loader.inform('- 上滑继续加载 -');
-                } else {
-                    if (data.flag == 0 || !data.data_list.length) {
-                        curTab.isEnd = true;
-                        me.loader.inform('- 到底啦 -');
-                    }
-                }
-
+                renderList.call(me, data.data_list);
                 //必须得有
-                curTab.isRender = true;
-                cb && cb(); //回调函数
+                me.oCurTab.isRender = true;
+                cb && cb();
             },
             error: function () {
                 console.log('ajax error');
@@ -91,23 +66,24 @@ new TSL({
     }
 });
 
-function renderList(arr) { // arr: ajax请求到的数据，一般为数组类型
-    // 注意：此函数的this指向在调用时被call修改过，所以指向TSL实例
-    // 举个栗子：
-    // this.$conts 等于 $('.J_cont');
-    // this.curTabIndex 等于 当前tab的索引值
-    // this.opts.className.items 等于 '__items__';
-    // this.$cont.eq(this.curTabIndex).find('.' + this.opts.className.items);
-    // 等于
-    // $('.J_cont').eq(index).find('.__items__')
+function renderList(arr) { // arr => ajax请求到的数据，一般为数组类型
+    /*
+        注意：此函数的this指向在调用时使用call，this指向TSL实例
+        举个栗子：
+        this.curTabIndex //当前tab索引值
+        this.$contWrap //$('.J_contWrap');
+        this.$cont.eq(this.curTabIndex) //$('.J_contWrap .cont').eq(this.curTabIndex);
+        this.opts.className.items //'__items__';
 
-    // this的属性方法，请参考下方API，自行console
+        this的属性方法，请自行console
+        参数配置信息，请参考下方API
+     */
 }
 ```
 
 ## API
 
-```
+```js
 //调用方法
 new TSL(options)
 ```
@@ -132,12 +108,13 @@ iscroll插件引用的className，注意有个`.`
 
 html中需要使用的className，如有冲突，可自行修改。
 
-```
+```js
 {
-    tab: 'J_tab',			//(type:String) tab区class
-    conts: 'J_cont',		//(type:String) tab cont区父class
-    cont: 'cont',			//(type:String) tab cont区每个容器class
-    items: '__items__'		//(type:String) 商品列表外层总的容器class，与loading的div同级
+    tabWrap: 'J_tabWrap',			//tab外层包裹容器样式名
+    contWrap: 'J_contWrap',			//cont外层包裹容器样式名
+    cont: 'cont',					//cont容器名，与html中的名称对应上
+    contActive: 'cont-active', 		//选项卡切换时当前（显示）的样式名
+    items: '__items__'				//cont容器内用来包裹数据的容器样式名，与__loading__并列
 }
 ```
 
@@ -153,11 +130,11 @@ html中需要使用的className，如有冲突，可自行修改。
 
 `render`函数的`callback`执行时触发
 
-**`options.click($curTab)`**
+**`options.tabClick($obj)`**
 
 > 类型：`Function`
 
-点击tab时触发，`$curTab`为被点击的li元素，为jquery对象
+点击tab时触发，`$obj`为被点击的li元素，为jquery对象
 
 **`options.scroll(scrollTop)`**
 
@@ -171,11 +148,11 @@ html中需要使用的className，如有冲突，可自行修改。
 
 TSL插件中单独使用了loading插件，配置如下：
 
-```
+```js
 {
     styleID: '__loading_style__',   //(type:String) style标签的id属性
     className: '__loading__',       //(type:String) loading元素的className
-    icon: 'xxx.png',                //(type:String) loading菊花图标
+    icon: 'xxx.png',                //(type:String) loading菊花图标，本插件使用base64
     size: 20,                       //(type:Number) loading大小，影响图标与字体大小
     multi: 2.5,                     //(type:Number) loading大小系数，影响图标的高度
     html: '<i></i><span>加载中, 请稍后...</span>' //(type:String)  loading文本内容

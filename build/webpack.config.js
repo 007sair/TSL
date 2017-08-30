@@ -32,7 +32,16 @@ var webpackConfig = {
         path: path.join(process.cwd(), "dist/"),
         publicPath: "",
         filename: prod ? 'js/[name].js' : 'js/[name].[chunkhash:10].js',
-        chunkFilename: "js/[name].js"
+        chunkFilename: "js/[name].js",
+        libraryTarget: "umd",
+        library: "TSL"
+    },
+    module: {
+        loaders: [
+            {test: /\.css$/,loader: 'style-loader!css-loader'},
+            {test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192'},
+            {test: /\.svg/, loader: 'svg-url-loader'}
+        ]
     },
     plugins: []
 };

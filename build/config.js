@@ -8,7 +8,7 @@ var config = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/index.html',
-            chunks: ['index']
+            chunks: ['tsl']
         }),
         new uglifyJsPlugin({
             compress: {
