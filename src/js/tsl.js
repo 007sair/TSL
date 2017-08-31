@@ -14,15 +14,19 @@ function TSL(options) {
 
 	//配置项
 	this.opts = $.extend({}, {
-		auto: 200,
+		isDisableAutoLoad: false,	//是否禁用自动加载，默认不禁用
+		isDisableScroll: false,		//是否禁用上滑加载，默认不禁用 为true时，this.opts.scroll函数也会失效
+		defaultTabIndex: 0,			//默认选中、显示第1个tab
 		startPage: 1,				//开始页数
-		iScroll: '.J_iScroll',		//iScroll引用class
+		iScroll: '.J_iScroll',		//iScroll引用class，为null时可禁用iscroll
 		isTabSticky: true,			//是否使用tab悬浮
 		className: {
 			tabWrap: 'J_tabWrap',			//tab外层包裹容器样式名
+			tabActive: 'tab-active',		//tab选中样式
+			tabTag: 'li',					//tab点击元素标签名，默认li
         	contWrap: 'J_contWrap',			//cont外层包裹容器样式名
-        	cont: 'cont',					//cont容器名，与html中的名称对应上
-        	contActive: 'cont-active', 		//选项卡切换时当前（显示）的样式名
+			contActive: 'cont-active', 		//tab选中样式对应的容器样式
+			cont: 'cont',					//cont容器名，与html中的名称对应上
         	items: '__items__'				//cont容器内用来包裹数据的容器样式名，与__loading__并列
 		},
 		render: function(callback) {
@@ -58,7 +62,7 @@ function TSL(options) {
 	this.arr_tab = [];
 
 	//当前选项卡索引，没有选项卡时默认为0
-	this.curTabIndex = 0;
+	this.curTabIndex = this.opts.defaultTabIndex || 0;
 
 	//当前tab的数据，数据结构来自this.model
 	this.oCurTab = {};
@@ -73,7 +77,6 @@ function TSL(options) {
 	this.loader = new Loading(this.opts.loading);
 
 	this.timer = null; 			//load定时器
-	this.isStopLoad = false; 	//是否停止滚动加载，默认不停止，如果停止，将不触发load方法
 
 	this.init();
 }
@@ -97,18 +100,19 @@ TSL.prototype = {
 				this.y = this.sticky.arr_tops[0] + 2; //跳转悬浮位置，+2是为了保证处于悬浮状态
 			}
 
-			window.myScroll = new IScroll(me.opts.iScroll, {
-				fixedScrollBar: true,
-				bindToWrapper: false,
-				eventPassthrough: true,
-				scrollX: true,
-				scrollY: false,
-				preventDefault: false
-			});
-			
+			if (this.opts.iScroll) {
+				window.myScroll = new IScroll(me.opts.iScroll, {
+					fixedScrollBar: true,
+					bindToWrapper: false,
+					eventPassthrough: true,
+					scrollX: true,
+					scrollY: false,
+					preventDefault: false
+				});
+			}
 
 			//初始化dom和一些数据
-			this.$tabWrap.find('li').each(function (index, el) {
+			this.$tabWrap.find(me.opts.className.tabTag).each(function (index, el) {
 				//根据数据模型初始化每个tab的数据
 				me.arr_tab.push($.extend(true, {}, me.model));
 				me.$cont.eq(index).append(__item__);
@@ -119,7 +123,7 @@ TSL.prototype = {
 
 		} else { //没有选项卡，只有1条数据
 			this.arr_tab.push($.extend(true, {}, me.model));
-			this.$cont.append(__item__)
+			this.$cont.append(__item__);
 		}
 
 		//有了arr_tab后可以获取到默认tab数据
@@ -140,25 +144,27 @@ TSL.prototype = {
 	bindClick: function() {
 		var me = this;
 
-		this.$tabWrap.on('click', 'li', function() {
+		this.$tabWrap.on('click', me.opts.className.tabTag, function() {
 			
-			if ($(this).hasClass('active')) {
+			if ($(this).hasClass(me.opts.className.tabActive)) {
 				return false
 			};
 
 			var index = $(this).index();
 			me.curTabIndex = index;
-			
 			me.oCurTab = me.arr_tab[index];
 
-			$(this).addClass('active').siblings('li').removeClass('active');
+			$(this).addClass(me.opts.className.tabActive)
+				   .siblings(me.opts.className.tabTag).removeClass(me.opts.className.tabActive);
 
 			me.$cont.eq(index).addClass(me.opts.className.contActive).show()
 			  .siblings('.' + me.opts.className.cont).removeClass(me.opts.className.contActive).hide();
 
-			setTimeout(function () {
-				window.myScroll.scrollToElement("li:nth-child(" + (index + 1) + ")", 200, true);
-			}, 200);
+			if (me.opts.iScroll) {
+				setTimeout(function () {
+					window.myScroll.scrollToElement("li:nth-child(" + (index + 1) + ")", 200, true);
+				}, 200);
+			}
 
 			/**
 			 * bug：切换tab时会触发底部上滑加载，导致无效加载。
@@ -200,7 +206,7 @@ TSL.prototype = {
 	bindEvent: function() {
 		var me = this;
 		window.addEventListener('scroll', function () {
-			if (me.loader.isLoading() || me.isStopLoad) {
+			if (me.opts.isDisableScroll || me.loader.isLoading()) {
 				return false
 			}
 			var scrollTop = $(window).scrollTop();
@@ -210,8 +216,7 @@ TSL.prototype = {
 			}
 
 			if (me.isHasTab) {
-				//根据滚动，记录当前tab的数据
-				me.oCurTab.scroll = scrollTop
+				me.oCurTab.scroll = scrollTop; //根据滚动，记录当前tab的数据
 			}
 
 			//暴露滚动事件
@@ -232,30 +237,14 @@ TSL.prototype = {
 		clearTimeout(me.timer);
 		me.timer = setTimeout(function() {
 			me.opts.render.call(me, function() {
-				if (!me.isOut()) { //如果页面没有超过一屏，继续加载
+				if (!me.opts.isDisableAutoLoad && !me.isOut()) { //如果页面没有超过一屏，继续加载
 					me.load();
-					setTimeout(function() {
-						
-					}, me.opts.auto);
 				} else {
 					callback && callback();
 					me.opts.afterRender.call(me);
 				}
 			})
 		}, 500);
-	},
-	/**
-	 * 阻止一次加载，然后立即解除阻止
-	 */
-	stopLoadOnce: function() {
-		var me = this;
-		me.isStopLoad = true;
-		setTimeout(function() {
-			me.isStopLoad = false;
-		}, me.opts.auto + 50);
-	},
-	stopLoad: function() { //停止滚动事件
-		this.isStopLoad = true;
 	},
 	isOut: function() {
 		//如果当前容器的高度+距离顶部的距离 大于 屏幕高度 说明超过一屏

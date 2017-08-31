@@ -9,17 +9,17 @@
 - 选项卡悬浮（sticky）
 - 上滑加载（ajax）
 
-## Usage
+## 使用方法
 
 ### `HTML:`
 
-```
+``` html
 <div class="J_tabWrap">
     <div class="tsl-tab">
         <div class="J_iScroll">
             <ul>
-                <li _id="1" class="active">tab1</li>
-                <li _id="2">tab2</li>
+                <li class="active">tab1</li>
+                <li>tab2</li>
                 ...
             </ul>
         </div>
@@ -33,16 +33,15 @@
 </div>
 ```
 
-**注意：** `J_`开头的`class`，都是`js`需要使用的class，如果冲突，可在配置中进行修改。其他class可随意修改。
-
+**注意：** `J_`开头的`className`，都是`js`需要使用的class，如果冲突，可在配置中进行修改。其他class可随意修改。
 
 ### `JS:`
 
-```js
+``` javascript
 new TSL({
     iScroll: '.J_iScroll',
     className: {
-        //如果class有冲突，可以在这里重新定义
+        //如果className有冲突，可以在这里重新定义
     },
     render: function(cb) {
         var me = this;
@@ -90,11 +89,13 @@ new TSL(options)
 
 options的类型为对象，属性、方法如下：
 
-**`options.startPage`**
+### `options.isDisableAutoLoad`
 
-> 类型：`Number`，默认值：1
+类型：`Boolean`，是否禁用自动加载，默认不禁用
 
-页面起始页数
+### `options.startPage`
+
+类型：`Number`，页面起始页数，默认值为1
 
 **`options.iScroll`**
 

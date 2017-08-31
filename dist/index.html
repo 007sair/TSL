@@ -26,7 +26,7 @@
 		<div class="tsl-tab">
 			<div class="J_iScroll">
 				<ul>
-					<li _id="1" class="active"><i class="sprite-icon sprite-icon-6"></i>首页</li>
+					<li _id="1" class="tab-active"><i class="sprite-icon sprite-icon-6"></i>首页</li>
 					<li _id="2"><i class="sprite-icon sprite-icon-4"></i>母婴</li>
 					<li _id="3"><i class="sprite-icon sprite-icon-8"></i>玩具</li>
 					<li _id="4"><i class="sprite-icon sprite-icon-7"></i>童装</li>
@@ -108,8 +108,8 @@ $(function() {
 
 					data.data_list.length = 2;
 
-					if (me.oCurTab.page > 3) { //测试专用
-						data.flag = 0;
+					if (me.oCurTab.page >= 1) { //测试专用
+						// data.flag = 0;
 					}
 
 					if (data.flag == 1) {
