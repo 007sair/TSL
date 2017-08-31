@@ -87,27 +87,27 @@ function renderList(arr) { // arr => ajax请求到的数据，一般为数组类
 new TSL(options)
 ```
 
-### `options.isDisableAutoLoad`
+#### `options.isDisableAutoLoad`
 
 类型：`Boolean`，是否禁用自动加载，默认不禁用。
 
-### `options.isDisableScroll`
+#### `options.isDisableScroll`
 
 类型：`Boolean`，是否禁用上滑加载，默认不禁用，为`true`时，`options.scroll`函数也会失效。
 
-### `options.defaultTabIndex`
+#### `options.defaultTabIndex`
 
 类型：`Number`，页面默认tab位置，默认从第一个开始
 
-### `options.startPage`
+#### `options.startPage`
 
 类型：`Number`，页面起始页数，默认值为1。
 
-### `options.iScroll`
+#### `options.iScroll`
 
 类型：`String`or`null`，iscroll插件引用的className，注意有个`.`，默认值：'.J_iscroll'，禁用`iscroll`直接等于`null`即可。
 
-### `options.className`
+#### `options.className`
 
 类型：`Object`，html中需要使用的className，如有冲突，可自行修改。
 
@@ -123,23 +123,23 @@ new TSL(options)
 }
 ```
 
-**`options.render(callback)`**
+#### `options.render(callback)`
 
 类型：`Function`，渲染函数，页面初始加载、滑到底部、触发load函数都会执行此函数。`callback`为回调函数
 
-**`options.afterRender(callback)`**
+#### `options.afterRender(callback)`
 
 类型：`Function`，`render`函数的`callback`执行时触发
 
-**`options.tabClick($obj)`**
+#### `options.tabClick($obj)`
 
 类型：`Function`，点击tab时触发，`$obj`为被点击的li元素，为jquery对象
 
-**`options.scroll(scrollTop)`**
+#### `options.scroll(scrollTop)`
 
 类型：`Function`，将`scroll`事件暴露到外面，`scrollTop`为当前滚动值
 
-**`options.loading`**
+#### `options.loading`
 
 类型：`Object`，TSL插件中单独使用了loading插件，配置如下：
 
