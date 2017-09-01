@@ -13,7 +13,7 @@ var Loading = require('./mods/loading.js');
 function TSL(options) {
 
 	//配置项
-	this.opts = $.extend({}, {
+	this.opts = $.extend(true, {
 		isDisableAutoLoad: false,	//是否禁用自动加载，默认不禁用
 		isDisableScroll: false,		//是否禁用上滑加载，默认不禁用 为true时，this.opts.scroll函数也会失效
 		defaultTabIndex: 0,			//默认选中、显示第1个tab
@@ -29,34 +29,28 @@ function TSL(options) {
 			cont: 'cont',					//cont容器名，与html中的名称对应上
         	items: '__items__'				//cont容器内用来包裹数据的容器样式名，与__loading__并列
 		},
-		render: function(callback) {
-			//触发渲染函数 callback回调函数，可以在ajax中调用
-		},		
-		afterRender: function() {
-			//渲染结束后的回调函数
-		},			
+		load: function() {
+			//开始加载数据
+		},				
+		render: function (data) {
+			//渲染函数，传入的data为ajax数据
+			//this.$item为当前tab对应的cont容器对象，可以将data数据渲染到其中
+		},
 		tabClick: function($obj) {
 			//tab点击事件，$obj为当前被点击的元素，jq对象
 		},				
 		scroll: function(scrollTop) {
 			//scroll事件 scrollTop为滚动页面时的top值
-		}		
+		}
 	}, options);
-
-	//数据模型，不存放实际数据，供oCurTab使用
-	this.model = {
-		page: this.opts.startPage,   //起始页数，默认为1
-		isRender: false,	//是否渲染过，默认未渲染
-		isEnd: false, 		//是否结束，默认未结束，结束时停止调用load方法
-		scroll: 0			//scrollTop值
-	};
 
 	this.WINDOW_HEIGHT = $(window).height();
 
 	//jquery obj
-	this.$tabWrap = $('.' + this.opts.className.tabWrap);
-	this.$contWrap = $('.' + this.opts.className.contWrap);
-	this.$cont = this.$contWrap.find('.' + this.opts.className.cont);
+	this.$tabWrap = $('.' + this.opts.className.tabWrap);	//tab容器
+	this.$contWrap = $('.' + this.opts.className.contWrap);	//conts容器
+	this.$cont = null; 		//cont容器
+	this.$items = null;		//tan选中时，cont对应存放数据的容器，应为<div class="__items__"></div>
 	
 	//tab选项卡信息，存放一些由this.model生成的对象，没有选项卡时只有1组数据
 	this.arr_tab = [];
@@ -72,8 +66,6 @@ function TSL(options) {
 
 	this.y = 0; //window.scrollTo(x, y)的第二个参数
 
-	this.xhr = null;
-
 	this.loader = new Loading(this.opts.loading);
 
 	this.timer = null; 			//load定时器
@@ -82,66 +74,55 @@ function TSL(options) {
 }
 
 TSL.prototype = {
-
 	init: function() { //做一些初始化工作
-
-		var me = this;
-
-		//tagItem：cont容器内用来放商品的div（<div class="__items__"></div>），此div与loading div并列同级
-		var __item__ = '<div class="'+ me.opts.className.items +'"></div>';
-
-		if (this.isHasTab) { //有tab选项卡
-
-			if (this.opts.isTabSticky) { //使用tab悬浮
-				this.sticky = me.$tabWrap.sticky({
-					top: -1
-				});
-				//只有悬浮，才有跳转的意义
-				this.y = this.sticky.arr_tops[0] + 2; //跳转悬浮位置，+2是为了保证处于悬浮状态
-			}
-
-			if (this.opts.iScroll) {
-				window.myScroll = new IScroll(me.opts.iScroll, {
-					fixedScrollBar: true,
-					bindToWrapper: false,
-					eventPassthrough: true,
-					scrollX: true,
-					scrollY: false,
-					preventDefault: false
-				});
-			}
-
-			//初始化dom和一些数据
-			this.$tabWrap.find(me.opts.className.tabTag).each(function (index, el) {
-				//根据数据模型初始化每个tab的数据
-				me.arr_tab.push($.extend(true, {}, me.model));
-				me.$cont.eq(index).append(__item__);
-			});
-
-			//绑定tab的click事件
-			this.bindClick();
-
-		} else { //没有选项卡，只有1条数据
-			this.arr_tab.push($.extend(true, {}, me.model));
-			this.$cont.append(__item__);
-		}
-
-		//有了arr_tab后可以获取到默认tab数据
-		me.oCurTab = me.arr_tab[me.curTabIndex];
-
-		this.load(function() {
-			if (me.isHasTab) {
-				var offsetTop = me.$tabWrap.offset().top,
-					height = me.$tabWrap.height();
-				//设置一下最小高，避免切换tab会跳动
-				$(document.body).css('min-height', me.WINDOW_HEIGHT + offsetTop + height);
-			}
-		});
-
-		this.loader.init();  //初始化loading，插入loading需要的样式
+		//初始化loading，插入loading需要的样式
+		this.loader.init();
+		this.setSticky();
+		this.setIScroll();
+		this.bindClick();
+		this.setDOM();
+		this.start();
 		this.bindEvent();
 	},
+	/**
+	 * 开始启动TSL
+	 * 每个tab数据都有一个isEnd
+	 */
+	start: function() {
+		if (this.arr_tab[this.curTabIndex].isEnd) {
+			return false
+		}
+		var me = this;
+		me.getContainer();
+		me.loader.show();
+		clearTimeout(me.timer);
+		me.timer = setTimeout(function() {
+			me.opts.load.call(me);
+		}, 500);
+	},
+	render: function (data) { //外部ajax成功时调用，data为ajax传入的数据
+		var me = this;
+		this.$items = this.$cont.eq(this.curTabIndex).find('.' + this.opts.className.items);
+		this.opts.render.call(this, data);
+		this.oCurTab.page++;
+		this.oCurTab.isRender = true;
+		this.loader.inform('- 上滑继续加载 -');
+
+		if (!this.opts.isDisableAutoLoad && !this.isOut()) { //没有禁用自动加载 & 页面没有超过一屏，继续加载
+			me.start();
+		} else {
+			this.setMinHeight();
+		}
+	},
+	fail: function (msg) {
+		this.oCurTab.isEnd = true;
+		this.loader.inform(msg);
+		this.setMinHeight();
+	},
 	bindClick: function() {
+		if (!this.isHasTab) {
+			return false;
+		}
 		var me = this;
 
 		this.$tabWrap.on('click', me.opts.className.tabTag, function() {
@@ -166,6 +147,8 @@ TSL.prototype = {
 				}, 200);
 			}
 
+			//重新获取当前cont容器
+
 			/**
 			 * bug：切换tab时会触发底部上滑加载，导致无效加载。
 			 * 本逻辑为切换tab时记录跳转位置：
@@ -186,7 +169,7 @@ TSL.prototype = {
 			if (me.opts.isTabSticky && me.sticky.isFixed) { //支持sticky && tab悬浮
 				if (!me.oCurTab.isRender) { //首次渲染
 					window.scrollTo(0, me.y);
-					me.load();
+					me.start();
 				} else { //不是首次渲染
 					//如果其他tab为非悬浮状态，需要强制让其悬浮，否则页面会从tab悬浮变为tab非悬浮，影响用户体验
 					cur_scroll = cur_scroll < me.sticky.arr_tops[0] ? me.y : cur_scroll;
@@ -195,7 +178,7 @@ TSL.prototype = {
 			} else { //如果tab没有悬浮，直接跳到上个tab的滚动位置
 				me.oCurTab.scroll = $(window).scrollTop(); //见：注释①
 				if (!me.oCurTab.isRender) {
-					me.load();
+					me.start();
 				}
 			}
 
@@ -212,7 +195,7 @@ TSL.prototype = {
 			var scrollTop = $(window).scrollTop();
 			var docHeight = $(document.body).height();
 			if (scrollTop >= docHeight - me.WINDOW_HEIGHT) { //满足到底部的条件
-				me.load();
+				me.start();
 			}
 
 			if (me.isHasTab) {
@@ -227,28 +210,87 @@ TSL.prototype = {
 		var $container = this.$cont.eq(this.curTabIndex);
 		this.loader.container = $container;
 	},
-	load: function(callback) { //参数：回调函数，此函数需放入ajax.success内执行
-		if (this.arr_tab[this.curTabIndex].isEnd) {
-			return false
-		}
-		var me = this;
-		me.getContainer();
-		me.loader.show();
-		clearTimeout(me.timer);
-		me.timer = setTimeout(function() {
-			me.opts.render.call(me, function() {
-				if (!me.opts.isDisableAutoLoad && !me.isOut()) { //如果页面没有超过一屏，继续加载
-					me.load();
-				} else {
-					callback && callback();
-					me.opts.afterRender.call(me);
-				}
-			})
-		}, 500);
-	},
 	isOut: function() {
 		//如果当前容器的高度+距离顶部的距离 大于 屏幕高度 说明超过一屏
 		return (this.loader.container.height() + this.loader.container.offset().top > this.WINDOW_HEIGHT) ? true : false
+	},
+	/**
+	 * 设置最小高
+	 */
+	setMinHeight: function () {
+		if (this.isSetMinHeight) {
+			return false
+		}
+		if (this.isOut() && this.isHasTab) { //当超过一屏，才会设置最小高，避免切换tab页面高度不够一屏导致tab上下跳动
+			this.$contWrap.css('min-height', this.WINDOW_HEIGHT);
+			this.isSetMinHeight = true;
+		}
+	},
+	/**
+	 * 设置tab悬浮
+	 */
+	setSticky: function () {
+		if (this.isHasTab && this.opts.isTabSticky) { //使用tab悬浮
+			this.sticky = this.$tabWrap.sticky({
+				top: -1
+			});
+			//只有悬浮，才有跳转的意义
+			this.y = this.sticky.arr_tops[0] + 2; //跳转悬浮位置，+2是为了保证处于悬浮状态
+		}
+	},
+	/**
+	 * 设置iscroll
+	 */
+	setIScroll: function () {
+		if (this.isHasTab && this.opts.iScroll) { //如果有tab并且iScroll引用正确
+			window.myScroll = new IScroll(this.opts.iScroll, {
+				fixedScrollBar: true,
+				bindToWrapper: false,
+				eventPassthrough: true,
+				scrollX: true,
+				scrollY: false,
+				preventDefault: false
+			});
+		}
+	},
+	/**
+	 * 根据tab个数设置cont容器
+	 * 初始化tab数据数组arr_tab，数组每个元素都是一个对象，对象属性来自model
+	 */
+	setDOM: function () {
+		var me = this;
+		var sCont = '';
+		//数据模型，不存放实际数据，供oCurTab使用
+		var model = {
+			page: this.opts.startPage,   //起始页数，默认为1
+			isRender: false,			 //是否渲染过，默认未渲染
+			isEnd: false, 		//是否结束，默认未结束，结束时停止调用load方法
+			scroll: 0			//scrollTop值
+		};
+		if (this.isHasTab) {
+			//初始化dom和一些数据
+			this.$tabWrap.find(me.opts.className.tabTag).each(function (index, el) {
+				//根据数据模型初始化每个tab的数据
+				me.arr_tab.push($.extend(true, {}, model));
+				sCont += '<div class="'+ me.opts.className.cont +' '+ (index == 0 ? me.opts.className.contActive : '') +'">\
+								<div class="'+ me.opts.className.items +'"></div>\
+							</div>';
+			});
+		} else {
+			this.arr_tab.push($.extend(true, {}, model));
+			sCont += '<div class="'+ me.opts.className.cont +' '+ me.opts.className.contActive +'">\
+								<div class="'+ me.opts.className.items +'"></div>\
+						</div>';
+		}
+		//根据li个数，创建cont容器
+		this.$contWrap.html(sCont);
+		this.$cont = this.$contWrap.find('.' + this.opts.className.cont);
+
+		//获取当前cont容器
+		this.$items = this.$cont.eq(this.curTabIndex).find('.' + this.opts.className.items);
+		
+		//有了arr_tab后可以获取到默认tab数据
+		me.oCurTab = me.arr_tab[me.curTabIndex];
 	},
 	/**
 	 * 重新加载功能
@@ -256,9 +298,9 @@ TSL.prototype = {
 	reload: function() {
 		var me = this;
 		me.loader.loading.html('<input value="重新加载" class="reloadBtn" type="button">');
-		me.loader.container.find('.' + me.loader.className).on('click', '.reloadBtn', function() {
-			me.loader.inform(me.loader.opts.html);
-			me.load();
+		me.$cont.on('click', '.reloadBtn', function() {
+			me.oCurTab.isEnd = false;
+			me.start();
 		});
 	}
 };

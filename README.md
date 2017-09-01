@@ -38,54 +38,60 @@
 ### `JS:`
 
 ``` javascript
-new TSL({
-    iScroll: '.J_iScroll',
-    className: {
-        //如果className有冲突，可以在这里重新定义
-    },
-    render: function(cb) {
+//调用
+var tsl = new TSL({
+    load: function() {
         var me = this;
-        //在这里写ajax，具体用法参考src/index.html，这里仅举例说明
         $.ajax({
-            url: 'xxx.json',
+            url: 'xxx',
             type: 'get',
-            data: {},
+            data: {
+                page: me.oCurTab.page,
+                tab: me.curTabIndex
+            },
             dataType: 'json',
-            success: function (data) {
-                renderList.call(me, data.data_list);
-                //必须得有
-                me.oCurTab.isRender = true;
-                cb && cb();
+            success: function (res) {
+                if (res.code == 1) { //成功
+                    //渲染数据，传入数据、当前被渲染tab索引
+                    me.render(res);
+                } else { //其他状态
+                    if (res.code == 0) { //全部加载完毕
+                        me.fail('- 到底啦 -');
+                    } else { //数据有误
+                        me.fail('- 数据有误 -');
+                        me.reload();
+                    }
+                }
+                
             },
             error: function () {
                 console.log('ajax error');
                 me.reload();
             }
         });
-    }
-});
-
-function renderList(arr) { // arr => ajax请求到的数据，一般为数组类型
-    /*
-        注意：此函数的this指向在调用时使用call，this指向TSL实例
+    },
+    render: function (res) { //渲染函数，res为this.render传入参数
+        /*
         举个栗子：
         this.curTabIndex //当前tab索引值
-        this.$contWrap //$('.J_contWrap');
-        this.$cont.eq(this.curTabIndex) //$('.J_contWrap .cont').eq(this.curTabIndex);
-        this.opts.className.items //'__items__';
-
-        this的属性方法，请自行console
-        参数配置信息，请参考下方API
-     */
-}
+        this.$items      //ajax加载的数据应被append到这个容器内
+        this的属性方法，请自行console，参数配置信息，请参考下方API
+         */
+    }
+});
 ```
 
 ## API
 
 ```js
-//调用方法 options的类型为对象，属性、方法如下：
-new TSL(options)
+var tsl = new TSL(options)
 ```
+
+### tsl
+
+tsl实例的属性与方法，请自行console或者查看源代码。
+
+### options
 
 #### `options.isDisableAutoLoad`
 
@@ -105,7 +111,7 @@ new TSL(options)
 
 #### `options.iScroll`
 
-类型：`String`or`null`，iscroll插件引用的className，注意有个`.`，默认值：'.J_iscroll'，禁用`iscroll`直接等于`null`即可。
+类型：`String`or`null`，iscroll插件引用的className，注意有个`.`，默认值：'.J_iScroll'，禁用`iscroll`直接等于`null`即可。
 
 #### `options.className`
 

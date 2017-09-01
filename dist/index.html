@@ -41,7 +41,7 @@
 	</div>
 
 	<div class="tsl-conts J_contWrap">
-		<div class="cont cont-active"></div>
+		<!-- <div class="cont cont-active"></div>
 		<div class="cont"></div>
 		<div class="cont"></div>
 		<div class="cont"></div>
@@ -49,7 +49,7 @@
 		<div class="cont"></div>
 		<div class="cont"></div>
 		<div class="cont"></div>
-		<div class="cont"></div>
+		<div class="cont"></div> -->
 	</div>
 
 </div>
@@ -87,15 +87,10 @@
 $(function() {
 
 	//调用
-	new TSL({
-		render: function(cb) {
+	var tsl = new TSL({
+		load: function() {
 			var me = this;
-
-			if (this.xhr) {
-				this.xhr.abort()
-			}
-
-			this.xhr = $.ajax({
+			$.ajax({
 				url: 'images/data/common_list.json',
 				type: 'get',
 				data: {
@@ -104,54 +99,38 @@ $(function() {
 					id: me.$tabWrap.find('li').eq(me.curTabIndex).attr('_id')
 				},
 				dataType: 'json',
-				success: function (data) {
+				success: function (res) {
 
-					data.data_list.length = 2;
-
-					if (me.oCurTab.page >= 1) { //测试专用
-						// data.flag = 0;
+					//测试专用
+					res.data_list.length = 2;
+					if (me.oCurTab.page >= 5) {
+						res.code = 0;
 					}
 
-					if (data.flag == 1) {
+					if (res.code == 1) { //成功
 						//渲染数据，传入数据、当前被渲染tab索引
-						renderList.call(me, data.data_list, me.curTabIndex);
-
-						me.oCurTab.page++;
-						me.loader.inform('- 上滑继续加载 -');
-					} else {
-						if (data.flag == 0 || !data.data_list.length) {
-							me.oCurTab.isEnd = true;
-							me.loader.inform('- 到底啦 -');
+						me.render(res);
+					} else { //其他状态
+						if (res.code == 0) { //全部加载完毕
+							me.fail('- 到底啦 -');
+						} else { //数据有误
+							me.fail('- 数据有误 -');
+							me.reload();
 						}
 					}
-
-					//必须得有
-					me.oCurTab.isRender = true;
-					cb && cb();
+					
 				},
 				error: function () {
 					console.log('ajax error');
 					me.reload();
 				}
 			});
+		},
+		render: function (res) {
+			var interText = doT.template($("#gItems").text());
+			this.$items.append(interText(res.data_list));
 		}
 	});
-
-
-	/**
-	 * 渲染dom
-	 */
-	function renderList(arr, tab_index) {
-		//此函数在调用时使用call，所以this为TSL的实例对象
-		var tsl = this; 
-		//获取当前tab对应的cont容器
-		var $elembox = tsl.$cont.eq(tab_index).find('.' + tsl.opts.className.items);
-		//使用dot渲染数据
-		var interText = doT.template($("#gItems").text());
-		$elembox.append(interText(arr));
-
-		// console.log(tsl); //this为TSL实例
-	}
 
 
 })
