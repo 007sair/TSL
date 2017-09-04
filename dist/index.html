@@ -102,9 +102,9 @@ $(function() {
 				success: function (res) {
 
 					//测试专用
-					res.data_list.length = 2;
+					// res.data_list.length = 2;
 					if (me.oCurTab.page >= 5) {
-						res.code = 0;
+						// res.code = 0;
 					}
 
 					if (res.code == 1) { //成功
@@ -128,7 +128,7 @@ $(function() {
 		},
 		render: function (res) {
 			var interText = doT.template($("#gItems").text());
-			this.$items.append(interText(res.data_list));
+			this.$items.append(interText(res.data));
 		}
 	});
 

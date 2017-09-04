@@ -4,11 +4,10 @@
  */
 
 //lib
-var IScroll = require('./lib/iscroll-lite.js'); //iScroll轻量版
-
-//mods
-require('./mods/sticky.js'); //解决移动端fixed平滑吸顶
+var IScroll = require('./mods/iscroll-lite.js'); //iScroll轻量版
+var Sticky = require('./mods/sticky.js'); //解决移动端fixed平滑吸顶
 var Loading = require('./mods/loading.js');
+
 
 function TSL(options) {
 
