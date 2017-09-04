@@ -271,7 +271,7 @@ TSL.prototype = {
 			this.$tabWrap.find(me.opts.className.tabTag).each(function (index, el) {
 				//根据数据模型初始化每个tab的数据
 				me.arr_tab.push($.extend(true, {}, model));
-				sCont += '<div class="'+ me.opts.className.cont +' '+ (index == 0 ? me.opts.className.contActive : '') +'">\
+				sCont += '<div class="'+ me.opts.className.cont +' '+ (index == me.curTabIndex ? me.opts.className.contActive : '') +'">\
 								<div class="'+ me.opts.className.items +'"></div>\
 							</div>';
 			});
