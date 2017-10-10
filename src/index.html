@@ -88,6 +88,7 @@ $(function() {
 
 	//调用
 	var tsl = new TSL({
+		isTabSticky: false,
 		load: function() {
 			var me = this;
 			$.ajax({
@@ -103,8 +104,8 @@ $(function() {
 
 					//测试专用
 					// res.data_list.length = 2;
-					if (me.oCurTab.page >= 5) {
-						// res.code = 0;
+					if (me.oCurTab.page >= 2) {
+						// res.code = 3;
 					}
 
 					if (res.code == 1) { //成功

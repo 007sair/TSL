@@ -141,10 +141,12 @@ TSL.prototype = {
 			  .siblings('.' + me.opts.className.cont).removeClass(me.opts.className.contActive).hide();
 
 			if (me.opts.iScroll) {
-				setTimeout(function () {
-					window.myScroll.scrollToElement("li:nth-child(" + (index + 1) + ")", 200, true);
-				}, 200);
+				// setTimeout(function () {
+				// 	window.myScroll.scrollToElement("li:nth-child(" + (index + 1) + ")", 200, true);
+				// }, 200);
 			}
+
+			
 
 			//重新获取当前cont容器
 
@@ -165,20 +167,27 @@ TSL.prototype = {
 			*	  d.点tab1，理论上tab1此时应该显示第一个商品（步骤b并未重置），不加这句会让显示商品变成步骤a的商品位置
 			*/
 			var cur_scroll = me.oCurTab.scroll;
-			if (me.opts.isTabSticky && me.sticky.isFixed) { //支持sticky && tab悬浮
-				if (!me.oCurTab.isRender) { //首次渲染
-					window.scrollTo(0, me.y);
-					me.start();
-				} else { //不是首次渲染
-					//如果其他tab为非悬浮状态，需要强制让其悬浮，否则页面会从tab悬浮变为tab非悬浮，影响用户体验
-					cur_scroll = cur_scroll < me.sticky.arr_tops[0] ? me.y : cur_scroll;
-					window.scrollTo(0, cur_scroll);
-				}
-			} else { //如果tab没有悬浮，直接跳到上个tab的滚动位置
-				me.oCurTab.scroll = $(window).scrollTop(); //见：注释①
-				if (!me.oCurTab.isRender) {
-					me.start();
-				}
+			// if (me.opts.isTabSticky && me.sticky.isFixed) { //支持sticky && tab悬浮
+			// 	if (!me.oCurTab.isRender) { //首次渲染
+			// 		window.scrollTo(0, me.y);
+			// 		me.start();
+			// 	} else { //不是首次渲染
+			// 		//如果其他tab为非悬浮状态，需要强制让其悬浮，否则页面会从tab悬浮变为tab非悬浮，影响用户体验
+			// 		cur_scroll = cur_scroll < me.sticky.arr_tops[0] ? me.y : cur_scroll;
+			// 		window.scrollTo(0, cur_scroll);
+			// 	}
+			// } else { //如果tab没有悬浮，直接跳到上个tab的滚动位置
+			// 	me.oCurTab.scroll = $(window).scrollTop(); //见：注释①
+			// 	if (!me.oCurTab.isRender) {
+			// 		me.start();
+			// 	}
+			// }
+
+			if (!me.oCurTab.isRender) { //首次渲染
+				window.scrollTo(0, me.y);
+				me.start();
+			} else { //不是首次渲染
+				window.scrollTo(0, me.oCurTab.scroll);
 			}
 
 			//暴露click事件
@@ -243,9 +252,12 @@ TSL.prototype = {
 	setIScroll: function () {
 		if (this.isHasTab && this.opts.iScroll) { //如果有tab并且iScroll引用正确
 			window.myScroll = new IScroll(this.opts.iScroll, {
-
+				fixedScrollBar: true,
+				bindToWrapper: false,
+				scrollX: false,
+				scrollY: true,
+				preventDefault: false
 			});
-			console.log(myScroll);
 		}
 	},
 	/**
