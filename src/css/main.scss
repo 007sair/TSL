@@ -107,25 +107,40 @@ header {
 	}
 }
 
+.J_tabWrap {
+	position: fixed;
+	width: rem(150);
+	height: 100%;
+	z-index: 101;
+}
+
 .tsl-tab {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: rem(150);
 	$red: #ff5757;
 	$red-active: #f73838;
-	position: relative;
 	background-color: $red;
 	overflow: hidden;
-	height: rem(106);
 	box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
-	ul {
+	z-index: 100;
+	> div {
 		position: absolute;
+		top: 0;
+		width: 100%;
 		height: 100%;
-		white-space: nowrap;
-		font-size: 0;
+		z-index: 1;
+		overflow: hidden;
+	}
+	ul {
+		width: 100%;
 	}
 	li {
-		display: inline-block;
-		vertical-align: middle;
-		width: rem(164);
-		height: 100%;
+		width: 100%;
+		margin-bottom: rem(40);
+		padding: rem(40) 0;
 		font-size: rem(26);
 		text-align: center;
 		color: #fff;

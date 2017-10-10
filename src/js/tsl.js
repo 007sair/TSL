@@ -243,13 +243,9 @@ TSL.prototype = {
 	setIScroll: function () {
 		if (this.isHasTab && this.opts.iScroll) { //如果有tab并且iScroll引用正确
 			window.myScroll = new IScroll(this.opts.iScroll, {
-				fixedScrollBar: true,
-				bindToWrapper: false,
-				eventPassthrough: true,
-				scrollX: true,
-				scrollY: false,
-				preventDefault: false
+
 			});
+			console.log(myScroll);
 		}
 	},
 	/**

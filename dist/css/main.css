@@ -158,9 +158,11 @@ header .left-btn{position:relative;float:left;width:1.1733rem;height:100%}
 header .left-btn:after{position:absolute;content:'';top:50%;left:50%;border-top:1px solid #5f646e;border-left:1px solid #5f646e;width:.3333rem;height:.3333rem;-webkit-transform:translate(-50%,-50%) rotate(-45deg);-moz-transform:translate(-50%,-50%) rotate(-45deg);-ms-transform:translate(-50%,-50%) rotate(-45deg);transform:translate(-50%,-50%) rotate(-45deg)}
 header .right-btn{float:right;width:1.1733rem;height:100%}
 header .right-btn i{display:block;margin:.2533rem auto 0}
-.tsl-tab{position:relative;background-color:#ff5757;overflow:hidden;height:1.4133rem;-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,.5);box-shadow:0 1px 3px 0 rgba(0,0,0,.5)}
-.tsl-tab ul{position:absolute;height:100%;white-space:nowrap;font-size:0}
-.tsl-tab li{display:inline-block;vertical-align:middle;width:2.1867rem;height:100%;font-size:.3467rem;text-align:center;color:#fff}
+.J_tabWrap{position:fixed;width:2rem;height:100%;z-index:101}
+.tsl-tab{position:fixed;top:0;bottom:0;left:0;width:2rem;background-color:#ff5757;overflow:hidden;-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,.5);box-shadow:0 1px 3px 0 rgba(0,0,0,.5);z-index:100}
+.tsl-tab>div{position:absolute;top:0;width:100%;height:100%;z-index:1;overflow:hidden}
+.tsl-tab ul{width:100%}
+.tsl-tab li{width:100%;margin-bottom:.5333rem;padding:.5333rem 0;font-size:.3467rem;text-align:center;color:#fff}
 .tsl-tab li i{display:block;margin:.1333rem auto 0;min-height:.6667rem}
 .tsl-tab li.tab-active{background-color:#f73838}
 /*# sourceMappingURL=main.css.map */
